@@ -1,0 +1,67 @@
+.vision-section {
+  position: relative;
+  background: var(--bg-card);
+  border-top: 1px solid var(--border-subtle);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.vision-content {
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+  position: relative;
+}
+
+.quote-icon {
+  color: rgba(195,163,101,0.2);
+  margin-bottom: 2rem;
+}
+
+.vision-text {
+  font-size: 3.5rem;
+  letter-spacing: -1.5px;
+  line-height: 1.2;
+  margin-bottom: 2rem;
+  color: var(--text-primary);
+}
+
+.highlight-text {
+  background: var(--gold-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.vision-sub {
+  font-size: 1.2rem;
+  color: var(--text-secondary);
+  line-height: 1.8;
+  max-width: 700px;
+  margin: 0 auto 3rem;
+}
+
+.vision-author {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.vision-author strong {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  color: var(--text-primary);
+  margin-bottom: 0.2rem;
+}
+
+.vision-author span {
+  color: var(--accent-gold);
+  font-size: 1rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+@media (max-width: 768px) {
+  .vision-text {
+    font-size: 2.2rem;
+  }
+}

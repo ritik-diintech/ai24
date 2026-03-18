@@ -1,0 +1,58 @@
+.industries-section {
+  position: relative;
+  background: var(--bg-dark);
+}
+
+.ind-header {
+  margin-bottom: 5rem;
+}
+
+.ind-header h2 {
+  font-size: 3rem;
+  letter-spacing: -1px;
+}
+
+.ind-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1.5rem;
+}
+
+.ind-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  padding: 2rem 1.5rem;
+  text-align: center;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.ind-card:hover {
+  background: rgba(195,163,101,0.05);
+  border-color: var(--accent-gold);
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.ind-name {
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+@media (max-width: 991px) {
+  .ind-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .ind-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .ind-header h2 {
+    font-size: 2.2rem;
+  }
+}

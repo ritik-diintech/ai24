@@ -1,0 +1,40 @@
+.talent-section {
+  position: relative;
+  background: var(--bg-card);
+}
+
+.talent-header {
+  margin-bottom: 4rem;
+}
+
+.talent-sub {
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+  max-width: 600px;
+  margin: 1.5rem auto 0;
+  line-height: 1.6;
+}
+
+.talent-header h2 {
+  font-size: 3rem;
+  letter-spacing: -1px;
+}
+
+.talent-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1.5rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+.talent-card h3 {
+  font-size: 1.25rem;
+  color: var(--accent-gold);
+  z-index: 2;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}

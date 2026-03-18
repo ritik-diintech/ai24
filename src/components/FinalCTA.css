@@ -1,0 +1,38 @@
+.cta-section {
+  position: relative;
+  background: var(--bg-dark);
+}
+
+.cta-content {
+  padding: 6rem 4rem;
+  background: linear-gradient(135deg, rgba(195,163,101,0.05) 0%, rgba(20,20,22,0.8) 100%);
+  border: 1px solid var(--border-gold);
+}
+
+.cta-content h2 {
+  font-size: 4rem;
+  letter-spacing: -2px;
+  line-height: 1.1;
+  margin-bottom: 2rem;
+}
+
+.cta-sub {
+  font-size: 1.25rem;
+  color: var(--text-secondary);
+  max-width: 600px;
+  margin: 0 auto 3rem;
+  line-height: 1.8;
+}
+
+.cta-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 768px) {
+  .cta-content h2 {
+    font-size: 3rem;
+  }
+}

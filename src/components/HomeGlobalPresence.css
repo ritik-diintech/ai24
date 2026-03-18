@@ -1,0 +1,330 @@
+/* ══════════════════════════════════════════════════════
+   Home → Global Presence (Luxury Premium)
+══════════════════════════════════════════════════════ */
+
+.hgp-section {
+  position: relative;
+  padding: 8rem 0 6rem;
+  background: #050507; /* Match hero dark background */
+  overflow: hidden;
+  z-index: 1;
+}
+
+/* Add a subtle luxury radial gradient in the background */
+.hgp-section::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: 50%;
+  width: 100vw;
+  height: 100vw;
+  transform: translateX(-50%);
+  background: radial-gradient(circle at 50% 50%, rgba(195, 163, 101, 0.04) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: -1;
+}
+
+.hgp-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  position: relative;
+}
+
+/* ───────────────────────────────────────────────────────
+   Header
+   ─────────────────────────────────────────────────────── */
+.hgp-header {
+  text-align: center;
+  margin-bottom: 4rem;
+  position: relative;
+}
+
+.hgp-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.5rem 1.4rem;
+  background: rgba(195, 163, 101, 0.05);
+  border: 1px solid rgba(195, 163, 101, 0.2);
+  border-radius: 100px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #c3a365;
+  margin-bottom: 1.5rem;
+  position: relative;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.hgp-pill::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: 100px;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(195, 163, 101, 0.4), transparent);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  pointer-events: none;
+}
+
+.hgp-title {
+  font-family: var(--font-heading, sans-serif);
+  font-size: 3.5rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  background: linear-gradient(135deg, #ffffff 0%, #c9cdd4 50%, #ffffff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 1.2rem;
+  text-shadow: 0 10px 30px rgba(255, 255, 255, 0.05);
+}
+
+.hgp-subtitle {
+  font-size: 1.15rem;
+  color: rgba(255, 255, 255, 0.6);
+  line-height: 1.8;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.hgp-subtitle strong {
+  color: #c3a365;
+  font-weight: 600;
+}
+
+/* ───────────────────────────────────────────────────────
+   Grid & Layout
+   ─────────────────────────────────────────────────────── */
+.hgp-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+}
+
+.hgp-card--hq {
+  grid-column: span 2;
+  grid-row: span 2;
+}
+
+/* ───────────────────────────────────────────────────────
+   Luxury Cards
+   ─────────────────────────────────────────────────────── */
+.hgp-card {
+  position: relative;
+  border-radius: 20px;
+  background: rgba(18, 20, 25, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  overflow: hidden;
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 
+    0 10px 40px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+}
+
+.hgp-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(195, 163, 101, 0.02) 0%, transparent 100%);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.hgp-card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(195, 163, 101, 0.3);
+  box-shadow: 
+    0 20px 50px rgba(0, 0, 0, 0.5),
+    0 0 40px rgba(195, 163, 101, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  background: rgba(22, 24, 30, 0.8);
+}
+
+.hgp-card:hover::before {
+  opacity: 1;
+}
+
+/* ───────────────────────────────────────────────────────
+   Image wrapper
+   ─────────────────────────────────────────────────────── */
+.hgp-card-img-wrap {
+  position: relative;
+  width: 100%;
+  height: 180px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.hgp-card--hq .hgp-card-img-wrap {
+  height: 380px;
+}
+
+.hgp-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  filter: brightness(0.8) contrast(1.1) saturate(1.2);
+  transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1), filter 0.5s ease;
+}
+
+.hgp-card:hover .hgp-card-img {
+  transform: scale(1.08);
+  filter: brightness(1) contrast(1.1) saturate(1.3);
+}
+
+.hgp-card-img-fade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(18, 20, 25, 1) 0%, rgba(18, 20, 25, 0.6) 30%, transparent 100%);
+  transition: opacity 0.5s ease;
+}
+
+.hgp-card:hover .hgp-card-img-fade {
+  background: linear-gradient(to top, rgba(22, 24, 30, 1) 0%, rgba(22, 24, 30, 0.4) 40%, transparent 100%);
+}
+
+/* ───────────────────────────────────────────────────────
+   Badges
+   ─────────────────────────────────────────────────────── */
+.hgp-hq-tag {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  padding: 0.3rem 0.8rem;
+  background: linear-gradient(135deg, #c3a365 0%, #e8d5a3 100%);
+  color: #000;
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  border-radius: 6px;
+  box-shadow: 0 4px 15px rgba(195, 163, 101, 0.4);
+  z-index: 2;
+}
+
+/* ───────────────────────────────────────────────────────
+   Text / Info Content
+   ─────────────────────────────────────────────────────── */
+.hgp-card-info {
+  position: relative;
+  padding: 0 1.5rem 1.5rem;
+  z-index: 2;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  margin-top: -20px; /* Pull text up into the fade slightly */
+}
+
+.hgp-card-top {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.4rem;
+}
+
+.hgp-card-flag {
+  font-size: 1.3rem;
+  line-height: 1;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));
+}
+
+.hgp-card-city {
+  font-family: var(--font-heading, sans-serif);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 0.02em;
+  transition: color 0.3s ease;
+}
+
+.hgp-card--hq .hgp-card-city {
+  font-size: 1.8rem;
+}
+
+.hgp-card:hover .hgp-card-city {
+  color: #c3a365;
+}
+
+.hgp-card-role {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* ───────────────────────────────────────────────────────
+   Responsive
+   ─────────────────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .hgp-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .hgp-card--hq {
+    grid-column: span 2;
+    grid-row: span 1;
+  }
+  .hgp-card--hq .hgp-card-img-wrap {
+    height: 250px;
+  }
+}
+
+@media (max-width: 768px) {
+  .hgp-section {
+    padding: 5rem 0 4rem;
+  }
+  .hgp-title {
+    font-size: 2.5rem;
+  }
+  .hgp-subtitle {
+    font-size: 1rem;
+  }
+  .hgp-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+  .hgp-card--hq {
+    grid-column: span 2;
+    grid-row: span 1;
+  }
+  .hgp-card-img-wrap {
+    height: 150px;
+  }
+  .hgp-card--hq .hgp-card-img-wrap {
+    height: 220px;
+  }
+  .hgp-card-info {
+    padding: 0 1.2rem 1.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hgp-grid {
+    grid-template-columns: 1fr;
+  }
+  .hgp-card--hq {
+    grid-column: span 1;
+  }
+  .hgp-card-img-wrap,
+  .hgp-card--hq .hgp-card-img-wrap {
+    height: 200px;
+  }
+  .hgp-title {
+    font-size: 2rem;
+  }
+}

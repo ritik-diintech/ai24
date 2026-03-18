@@ -1,0 +1,53 @@
+.scale-section {
+  position: relative;
+  background: linear-gradient(0deg, var(--bg-card) 0%, var(--bg-dark) 100%);
+}
+
+.scale-content h2 {
+  font-size: 3.5rem;
+  letter-spacing: -1.5px;
+  margin-bottom: 2rem;
+}
+
+.scale-desc {
+  font-size: 1.15rem;
+  color: var(--text-secondary);
+  max-width: 700px;
+  margin: 0 auto 4rem;
+  line-height: 1.8;
+}
+
+.scale-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+}
+
+.scale-card {
+  padding: 2.5rem 1.5rem;
+  text-align: center;
+}
+
+.scale-card h3 {
+  font-size: 1.25rem;
+  color: var(--accent-gold);
+  margin-bottom: 1rem;
+}
+
+.scale-card p {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+@media (max-width: 991px) {
+  .scale-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .scale-grid {
+    grid-template-columns: 1fr;
+  }
+}

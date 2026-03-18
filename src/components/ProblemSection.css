@@ -1,0 +1,328 @@
+/* ══════════════════════════════════════════════════════
+   The Market Reality (Problem Section) - Luxury Premium
+══════════════════════════════════════════════════════ */
+
+.problem-section {
+  position: relative;
+  padding: 8rem 0;
+  background: #050507;
+  overflow: hidden;
+  z-index: 10;
+}
+
+/* Ambient Background */
+.ps-ambient {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.ps-orb {
+  position: absolute;
+  width: 45vw;
+  height: 45vw;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.15;
+  animation: orbFloat 15s ease-in-out infinite alternate;
+}
+
+.ps-orb-1 {
+  background: radial-gradient(circle, #c3a365 0%, transparent 70%); /* Changed to gold */
+  top: 10%;
+  left: -15%;
+}
+
+.ps-orb-2 {
+  background: radial-gradient(circle, #c3a365 0%, transparent 70%);
+  bottom: 0%;
+  right: -10%;
+  animation-delay: -5s;
+}
+
+@keyframes orbFloat {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(10%, -5%) scale(1.1); }
+}
+
+.ps-container {
+  position: relative;
+  z-index: 2;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 4%;
+}
+
+/* Header */
+.ps-header {
+  text-align: center;
+  margin-bottom: 6rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.ps-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.5rem 1.2rem;
+  background: rgba(195, 163, 101, 0.05); /* Gold tint */
+  border: 1px solid rgba(195, 163, 101, 0.2);
+  border-radius: 100px;
+  margin-bottom: 2rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #c3a365;
+}
+
+.ps-badge-dot {
+  width: 6px;
+  height: 6px;
+  background: #c3a365;
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(195, 163, 101, 0.8);
+  animation: pulseGold 2s infinite;
+}
+
+@keyframes pulseGold {
+  0% { transform: scale(1); opacity: 1; }
+  100% { transform: scale(2.5); opacity: 0; }
+}
+
+.ps-title {
+  font-family: var(--font-heading, sans-serif);
+  font-size: 3.5rem;
+  font-weight: 300; /* Sleek, thin font like upper section */
+  color: #ffffff;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+.ps-title span {
+  background: linear-gradient(135deg, #c3a365 0%, #e8d5a3 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-weight: 300;
+}
+
+/* Premium Frameless/Glass Grid */
+.ps-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+  margin-bottom: 6rem;
+}
+
+/* Card Styling (Default state shows red) */
+.ps-card {
+  position: relative;
+  padding: 3rem 2rem;
+  border-radius: 20px;
+  background: rgba(230, 57, 70, 0.02); /* Faint red background by default */
+  border: 1px solid rgba(230, 57, 70, 0.15); /* Visible red border */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+  box-shadow: inset 0 0 20px rgba(230, 57, 70, 0.02);
+}
+
+.ps-card-ambient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(230, 57, 70, 0.06) 0%, transparent 100%);
+  opacity: 0.5; /* Visible before hover */
+  transition: opacity 0.5s ease;
+  z-index: 0;
+}
+
+.ps-card:hover {
+  transform: translateY(-8px);
+  background: rgba(255, 10, 30, 0.05); /* Deeper red on hover */
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-color: rgba(255, 77, 77, 0.4); /* Brighter border */
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.6),
+    0 0 40px rgba(230, 57, 70, 0.15),
+    inset 0 1px 0 rgba(255, 100, 100, 0.2);
+}
+
+.ps-card:hover .ps-card-ambient {
+  opacity: 1; /* full opacity gradient */
+}
+
+/* Icon Wrap */
+.psc-icon-wrap {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  background: rgba(230, 57, 70, 0.08); /* Red tint by default */
+  border: 1px solid rgba(230, 57, 70, 0.2);
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2rem;
+  z-index: 1;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.psc-icon {
+  color: #ff4d4d; /* Bright red text default */
+  transition: all 0.4s ease;
+}
+
+.psc-glow {
+  position: absolute;
+  inset: -15px;
+  background: radial-gradient(circle, rgba(255, 77, 77, 0.4), transparent 60%);
+  opacity: 0.3; /* visible default glow */
+  transform: scale(0.8);
+  transition: all 0.4s ease;
+  pointer-events: none;
+  border-radius: 50%;
+}
+
+.ps-card:hover .psc-icon-wrap {
+  background: linear-gradient(135deg, rgba(255, 77, 77, 0.2), transparent);
+  border-color: rgba(255, 77, 77, 0.6);
+  transform: scale(1.1);
+  box-shadow: 0 0 20px rgba(255, 77, 77, 0.2);
+}
+
+.ps-card:hover .psc-icon {
+  color: #ffffff;
+  filter: drop-shadow(0 0 10px #ff4d4d);
+  transform: scale(1.1);
+}
+
+.ps-card:hover .psc-glow {
+  opacity: 1;
+  transform: scale(1.2);
+}
+
+/* Content Elements */
+.psc-title {
+  font-family: var(--font-heading, sans-serif);
+  font-size: 1.3rem;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 600;
+  margin-bottom: 1rem;
+  z-index: 1;
+  transition: all 0.4s ease;
+}
+
+.ps-card:hover .psc-title {
+  color: #ff8a94;
+  transform: translateX(5px);
+}
+
+.psc-desc {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.6);
+  line-height: 1.6;
+  font-weight: 300;
+  z-index: 1;
+  transition: color 0.4s ease;
+}
+
+.ps-card:hover .psc-desc {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* Conclusion Bridge */
+.ps-conclusion {
+  position: relative;
+  text-align: center;
+  padding: 4rem 2rem;
+  border-radius: 24px;
+  border: 1px solid rgba(195, 163, 101, 0.15);
+  background: rgba(18, 20, 25, 0.4);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+}
+
+.ps-conc-bg {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at top, rgba(195, 163, 101, 0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.ps-conc-text {
+  font-size: 1.4rem;
+  color: rgba(255, 255, 255, 0.6);
+  font-weight: 300;
+  margin-bottom: 0.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+.ps-conc-highlight {
+  font-family: var(--font-heading, sans-serif);
+  font-size: 2.2rem;
+  font-weight: 400;
+  background: linear-gradient(135deg, #c3a365, #e8d5a3, #ffffff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  position: relative;
+  z-index: 1;
+  letter-spacing: -0.01em;
+}
+
+/* ───────────────────────────────────────────────────────
+   Responsive
+   ─────────────────────────────────────────────────────── */
+@media (max-width: 1200px) {
+  .ps-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 1024px) {
+  .ps-title {
+    font-size: 2.8rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .ps-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  .ps-card {
+    padding: 2.5rem;
+  }
+  .ps-conc-text {
+    font-size: 1.2rem;
+  }
+  .ps-conc-highlight {
+    font-size: 1.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .problem-section {
+    padding: 5rem 0;
+  }
+  .ps-title {
+    font-size: 2.2rem;
+  }
+  .ps-header {
+    margin-bottom: 3.5rem;
+  }
+  .ps-conclusion {
+    padding: 3rem 1.5rem;
+  }
+}

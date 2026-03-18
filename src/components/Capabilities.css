@@ -1,0 +1,251 @@
+/* ======================================================================
+   CAPABILITIES SECTION - Premium Horizontal Slats (Accordion)
+   ====================================================================== */
+
+.capabilities-section {
+  position: relative;
+  background: #050507;
+  padding: 10rem 0;
+  overflow: hidden;
+  z-index: 10;
+}
+
+.cap-bg-elements {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.cap-dynamic-glow {
+  position: absolute;
+  left: 50%;
+  width: 60vw;
+  height: 40vw;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, rgba(195, 163, 101, 0.08) 0%, transparent 70%);
+  filter: blur(60px);
+  transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ── Side Header ── */
+.cap-header-side {
+  margin-bottom: 5rem;
+  text-align: left;
+}
+
+.cap-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.5rem 1.2rem;
+  background: rgba(195, 163, 101, 0.05);
+  border: 1px solid rgba(195, 163, 101, 0.2);
+  border-radius: 100px;
+  margin-bottom: 2.5rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: #c3a365;
+}
+
+.cap-badge-dot {
+  width: 5px;
+  height: 5px;
+  background: #c3a365;
+  border-radius: 50%;
+  animation: pulseGold 2s infinite;
+}
+
+.cap-main-title {
+  font-family: var(--font-heading, sans-serif);
+  font-size: 4.5rem;
+  font-weight: 300;
+  color: #ffffff;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.cap-main-title span {
+  background: linear-gradient(135deg, #c3a365 0%, #e8d5a3 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* ── Horizontal Slats ── */
+.cap-slat-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  background: rgba(255, 255, 255, 0.05); /* Thin separator lines */
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.cap-slat {
+  position: relative;
+  background: #050507;
+  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.slat-main {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2.5rem 0;
+  transition: all 0.4s ease;
+}
+
+.cap-slat:hover .slat-main {
+  padding-left: 2rem;
+  padding-right: 2rem;
+  background: rgba(195, 163, 101, 0.02);
+}
+
+.slat-left {
+  display: flex;
+  align-items: center;
+  gap: 4rem;
+}
+
+.slat-num {
+  font-family: var(--font-heading, sans-serif);
+  font-size: 1rem;
+  color: rgba(195, 163, 101, 0.4);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+
+.slat-titles h3 {
+  font-family: var(--font-heading, sans-serif);
+  font-size: 1.8rem;
+  font-weight: 300;
+  color: #ffffff;
+  margin-bottom: 0.4rem;
+  transition: color 0.4s ease;
+}
+
+.slat-titles p {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.4);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-weight: 400;
+}
+
+.cap-slat.active .slat-titles h3 {
+  color: #e8d5a3;
+}
+
+.slat-right {
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+}
+
+.slat-icon-circle {
+  width: 54px;
+  height: 54px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(195, 163, 101, 0.6);
+  transition: all 0.4s ease;
+}
+
+.cap-slat.active .slat-icon-circle {
+  border-color: #c3a365;
+  color: #e8d5a3;
+  background: rgba(195, 163, 101, 0.05);
+  box-shadow: 0 0 20px rgba(195, 163, 101, 0.1);
+}
+
+.slat-toggle {
+  color: rgba(255, 255, 255, 0.2);
+  transition: all 0.4s ease;
+}
+
+.cap-slat.active .slat-toggle {
+  color: #c3a365;
+  transform: rotate(180deg);
+}
+
+/* ── Slat Content (Expandable) ── */
+.slat-content {
+  max-height: 0;
+  opacity: 0;
+  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cap-slat.active .slat-content {
+  max-height: 400px;
+  opacity: 1;
+  padding-bottom: 4rem;
+}
+
+.slat-content-inner {
+  position: relative;
+  padding-left: 10rem; /* Align with titles */
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.slat-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem 3rem;
+  max-width: 800px;
+}
+
+.slat-list li {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 1.1rem;
+  font-weight: 300;
+  min-width: 300px;
+}
+
+.list-marker {
+  width: 6px;
+  height: 6px;
+  background: #c3a365;
+  border-radius: 50%;
+  opacity: 0.4;
+}
+
+.slat-visual-hint {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Responsive ── */
+@media (max-width: 1024px) {
+  .slat-left { gap: 2rem; }
+  .slat-content-inner { padding-left: 5rem; }
+  .slat-list li { min-width: 45%; }
+}
+
+@media (max-width: 768px) {
+  .cap-main-title { font-size: 3rem; }
+  .slat-num { display: none; }
+  .slat-left { gap: 0; }
+  .slat-titles h3 { font-size: 1.4rem; }
+  .slat-content-inner { padding-left: 0; }
+  .slat-list li { min-width: 100%; font-size: 1rem; }
+  .slat-right { gap: 1.5rem; }
+}

@@ -1,0 +1,58 @@
+.ecosystem-section {
+  position: relative;
+  background: var(--bg-card);
+}
+
+.eco-header {
+  margin-bottom: 5rem;
+}
+
+.eco-sub {
+  color: var(--text-secondary);
+  max-width: 600px;
+  margin: 1rem auto 0;
+  font-size: 1.1rem;
+}
+
+.eco-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+}
+
+.eco-card {
+  flex: 1 1 250px;
+  max-width: 320px;
+  padding: 2.5rem;
+  background: rgba(10, 10, 11, 0.4);
+}
+
+.eco-card h3 {
+  font-size: 1.15rem;
+  color: var(--accent-gold);
+  margin-bottom: 1.5rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.eco-tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+}
+
+.eco-tool-tag {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-strong);
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  transition: all 0.3s ease;
+}
+
+.eco-tool-tag:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: var(--accent-gold);
+}
