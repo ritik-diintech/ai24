@@ -11,6 +11,7 @@ import imgBangalore  from '../assets/images/about_city/banglore.jpg';
 import imgBirmingham from '../assets/images/about_city/birmingham.png';
 import imgChicago    from '../assets/images/about_city/chicago.png';
 import imgToronto    from '../assets/images/about_city/torronto.jpg';
+import imgUAE        from '../assets/country_image/uae_country.jpg';
 
 /* ─────────────────────────────────────────────────────────
    STORY STEPS
@@ -93,7 +94,7 @@ const STEPS = [
     badge: 'ONE SYSTEM',
     title: 'A Unified Global System',
     body: 'From Dubai to Bangalore, Birmingham to Toronto — Ai24 is one integrated growth engine operating across continents.',
-    img: imgDubai,
+    img: imgUAE,
     cta: true,
     focusX: 0.50, focusY: 0.45, scale: 1.05,
     side: 'center',
@@ -193,51 +194,150 @@ export default function GlobalPresenceSection() {
           key={s.id}                       /* key forces remount & CSS entry animation */
           className={`gps-panel gps-panel--${s.side}`}
         >
-          {/* ── HERO IMAGE ── */}
-          <div className="gps-card-img-wrap">
-            <img src={s.img} alt={s.country} className="gps-card-img" />
-            <div className="gps-card-img-overlay" />
-
-            <div className="gps-card-country">
-              <span className="gps-card-flag">{s.flag}</span>
-              <span className="gps-card-cname">{s.country}</span>
-            </div>
-
-            <span className="gps-card-badge">{s.badge}</span>
+          {/* ── TOP HUD BAR ── */}
+          <div style={{ 
+            padding: '1.2rem 1.5rem', 
+            borderBottom: '1px solid rgba(255,255,255,0.05)', 
+            display: 'flex', 
+            justifyContent: 'space-between', 
+            alignItems: 'center',
+            background: 'rgba(0,0,0,0.2)'
+          }}>
+             <div style={{ display: 'flex', alignItems: 'center', gap: '0.8rem' }}>
+                <span style={{ fontSize: '1.2rem', lineHeight: 1 }}>{s.flag}</span>
+                <span style={{ fontSize: '0.65rem', color: '#c3a365', letterSpacing: '0.25em', textTransform: 'uppercase', fontWeight: 600 }}>{s.badge}</span>
+             </div>
+             <div style={{ display: 'flex', gap: '4px' }}>
+                <div style={{ width: '4px', height: '4px', borderRadius: '50%', background: 'rgba(255,255,255,0.2)' }}></div>
+                <div style={{ width: '4px', height: '4px', borderRadius: '50%', background: 'rgba(255,255,255,0.2)' }}></div>
+                <div style={{ width: '4px', height: '4px', borderRadius: '50%', background: 'rgba(255,255,255,0.2)' }}></div>
+             </div>
           </div>
 
-          {/* ── BODY ── */}
-          <div className="gps-card-body">
-            <h2 className="gps-heading">{s.title}</h2>
-            <p  className="gps-body-text">{s.body}</p>
+          <div style={{ padding: s.id === 'final' ? '2.5rem 3rem' : '1.5rem 1.8rem' }}>
+             
+             {/* ── LARGE HEADLINE ── */}
+             <h2 style={{ 
+               fontSize: s.id === 'final' ? '2.5rem' : '2rem', 
+               fontFamily: "'Clash Display', sans-serif", 
+               fontWeight: 300, 
+               color: '#fff', 
+               lineHeight: 1.1, 
+               marginBottom: s.id === 'final' ? '1rem' : '0.8rem',
+               letterSpacing: '-0.02em'
+             }}>
+               {s.title}
+             </h2>
+             <p style={{ 
+               fontSize: s.id === 'final' ? '1rem' : '0.9rem', 
+               color: 'rgba(255,255,255,0.5)', 
+               lineHeight: 1.6, 
+               marginBottom: s.id === 'final' ? '1.5rem' : '1.5rem',
+               fontWeight: 300,
+               maxWidth: s.id === 'final' ? '600px' : 'none',
+               margin: s.id === 'final' ? '0 auto 1.5rem auto' : '0 0 1.5rem 0'
+             }}>
+               {s.body}
+             </p>
 
-            {s.address && (
-              <div className="gps-address">
-                <span className="gps-address-pin">📍</span>
-                <span>{s.address}</span>
-              </div>
-            )}
-
-            {s.hubs && (
-              <div className="gps-hubs">
-                {s.hubs.map(h => (
-                  <div key={h.name} className="gps-hub-chip">
-                    <img src={h.img} alt={h.name} className="gps-hub-img" />
-                    <div className="gps-hub-text">
-                      <strong>{h.name}</strong>
-                      <span>{h.role}</span>
-                    </div>
+             {/* ── SLEEK IMAGE INSET ── */}
+             {s.img && (
+               <div style={{ 
+                 position: 'relative', 
+                 width: '100%', 
+                 height: s.id === 'final' ? '180px' : '100px', 
+                 borderRadius: '4px', 
+                 overflow: 'hidden', 
+                 border: '1px solid rgba(255,255,255,0.08)', 
+                 marginBottom: '1.5rem' 
+               }}>
+                  <img src={s.img} alt={s.country} style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'grayscale(20%) brightness(0.8)' }} />
+                  <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, rgba(10,12,16,0.9) 0%, transparent 100%)' }}></div>
+                  
+                  <div style={{ position: 'absolute', bottom: '1rem', left: '1rem', display: 'flex', alignItems: 'center', gap: '0.8rem' }}>
+                     <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#c3a365', boxShadow: '0 0 12px #c3a365' }}></div>
+                     <span style={{ color: '#fff', fontSize: '0.7rem', letterSpacing: '0.15em', textTransform: 'uppercase', fontWeight: 500 }}>
+                        {s.id === 'final' ? 'ONE NETWORK' : `${s.country} NETWORK`}
+                     </span>
                   </div>
-                ))}
-              </div>
-            )}
+               </div>
+             )}
 
-            {s.cta && (
-              <div className="gps-cta-row">
-                <button className="gps-btn-gold">Book a Strategy Call</button>
-                <button className="gps-btn-ghost">Explore Capabilities</button>
-              </div>
-            )}
+             {/* ── DYNAMIC METADATA (Address / Hubs) ── */}
+             {s.address && (
+               <div style={{ 
+                 display: 'flex', 
+                 gap: '0.8rem', 
+                 padding: '1rem', 
+                 background: 'rgba(255,255,255,0.02)', 
+                 border: '1px dashed rgba(255,255,255,0.1)', 
+                 borderRadius: '4px' 
+               }}>
+                 <div style={{ color: '#c3a365', fontSize: '1.2rem' }}>📍</div>
+                 <span style={{ fontSize: '0.85rem', color: 'rgba(255,255,255,0.7)', lineHeight: 1.6, whiteSpace: 'pre-line', fontWeight: 300 }}>{s.address}</span>
+               </div>
+             )}
+
+             {s.hubs && (
+               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(85px, 1fr))', gap: '0.8rem' }}>
+                 {s.hubs.map(h => (
+                   <div key={h.name} style={{ 
+                     display: 'flex', 
+                     flexDirection: 'column',
+                     alignItems: 'center', 
+                     justifyContent: 'flex-start',
+                     textAlign: 'center',
+                     padding: '1.2rem 0.5rem', 
+                     background: 'rgba(255,255,255,0.02)', 
+                     borderTop: '2px solid #c3a365', 
+                     borderRadius: '4px',
+                     borderRight: '1px solid rgba(255,255,255,0.03)',
+                     borderBottom: '1px solid rgba(255,255,255,0.03)',
+                     borderLeft: '1px solid rgba(255,255,255,0.03)'
+                   }}>
+                     <div style={{ width: '32px', height: '32px', borderRadius: '4px', overflow: 'hidden', border: '1px solid rgba(255,255,255,0.1)', marginBottom: '0.5rem', flexShrink: 0 }}>
+                       <img src={h.img} alt={h.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                     </div>
+                     <div style={{ paddingBottom: '0.2rem' }}>
+                       <strong style={{ display: 'block', color: '#fff', fontSize: '0.8rem', fontFamily: "'Clash Display', sans-serif", fontWeight: 400, marginBottom: '0.4rem', lineHeight: 1.2 }}>{h.name}</strong>
+                       <span style={{ display: 'block', color: 'rgba(255,255,255,0.4)', fontSize: '0.65rem', fontWeight: 300, lineHeight: 1.3 }}>{h.role}</span>
+                     </div>
+                   </div>
+                 ))}
+               </div>
+             )}
+
+             {/* ── FINAL CTA ── */}
+             {s.cta && (
+               <div style={{ marginTop: '1.5rem', display: 'flex', gap: '1rem', flexDirection: 'column' }}>
+                 <button className="gps-btn-premium-cta" style={{ 
+                   width: '100%', 
+                   padding: '1.2rem', 
+                   background: 'linear-gradient(90deg, #c3a365 0%, #e6d3a8 50%, #c3a365 100%)', 
+                   backgroundSize: '200% auto',
+                   color: '#000', 
+                   border: 'none', 
+                   borderRadius: '4px', 
+                   fontWeight: 700, 
+                   fontSize: '0.85rem', 
+                   textTransform: 'uppercase', 
+                   letterSpacing: '0.2em', 
+                   cursor: 'pointer',
+                   boxShadow: '0 10px 30px rgba(195,163,101,0.3)',
+                   transition: 'all 0.3s ease'
+                 }}
+                 onMouseEnter={(e) => {
+                   e.currentTarget.style.transform = 'translateY(-2px)';
+                   e.currentTarget.style.boxShadow = '0 15px 40px rgba(195,163,101,0.5)';
+                 }}
+                 onMouseLeave={(e) => {
+                   e.currentTarget.style.transform = 'translateY(0)';
+                   e.currentTarget.style.boxShadow = '0 10px 30px rgba(195,163,101,0.3)';
+                 }}>
+                   Book a Strategy Call
+                 </button>
+               </div>
+             )}
           </div>
         </div>
 
@@ -258,8 +358,10 @@ export default function GlobalPresenceSection() {
         {/* SCROLL HINT  */}
         {step === 0 && (
           <div className="gps-scroll-hint">
-            <div className="gps-mouse"><div className="gps-mouse-dot" /></div>
-            <span>Scroll to explore</span>
+            <span className="gps-scroll-text">SCROLL TO EXPLORE</span>
+            <div className="gps-scroll-line">
+              <div className="gps-scroll-line-dot" />
+            </div>
           </div>
         )}
       </div>

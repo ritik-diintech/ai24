@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ArrowRight, Database, Zap, Activity, BarChart3, TrendingUp, Globe, ChevronRight, Sparkles } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import './Hero.css';
 
 const SLIDES = [
@@ -19,6 +20,7 @@ const NODES = [
 ];
 
 export default function Hero() {
+  const navigate = useNavigate();
   const sectionRef = useRef(null);
   const headlineRef = useRef(null);
   const [activeSlide, setActiveSlide] = useState(0);
@@ -202,11 +204,23 @@ export default function Hero() {
           </p>
 
           <div className="hero-cta-group">
-            <button className="hero-btn-primary" id="hero-cta-primary">
+            <button 
+              className="hero-btn-primary" 
+              id="hero-cta-primary"
+              onClick={() => {
+                navigate('/contact');
+              }}
+            >
               <span>Book Strategy Call</span>
               <ArrowRight size={18} />
             </button>
-            <button className="hero-btn-ghost" id="hero-cta-secondary">
+            <button 
+              className="hero-btn-ghost" 
+              id="hero-cta-secondary"
+              onClick={() => {
+                navigate('/capabilities');
+              }}
+            >
               <span>Explore Capabilities</span>
               <ChevronRight size={18} />
             </button>

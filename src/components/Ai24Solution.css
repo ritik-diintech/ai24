@@ -5,7 +5,7 @@
 .solution-section {
   position: relative;
   overflow: hidden;
-  background: #050507; /* Match ProblemSection background */
+  background: #050507 !important; /* Match ProblemSection background */
   z-index: 10;
   padding: 8rem 0;
 }

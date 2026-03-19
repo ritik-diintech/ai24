@@ -4,7 +4,7 @@
 
 .works-section {
   position: relative;
-  background: #050507;
+  background: #050507 !important;
   padding: 8rem 0;
   overflow: hidden;
   z-index: 10;
@@ -58,8 +58,15 @@
 }
 
 @keyframes pulseGoldWorks {
-  0% { transform: scale(1); opacity: 1; }
-  100% { transform: scale(2.5); opacity: 0; }
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(2.5);
+    opacity: 0;
+  }
 }
 
 .works-title {
@@ -111,54 +118,119 @@
 
 .flow-path-progress {
   position: absolute;
-  top: 0; left: 0;
-  height: 100%; width: 100px;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100px;
   background: linear-gradient(90deg, transparent, #c3a365, #e8d5a3, #c3a365, transparent);
   box-shadow: 0 0 25px rgba(195, 163, 101, 1), 0 0 50px rgba(195, 163, 101, 0.4);
-  animation: flowPathMove 10s linear infinite; /* Slower speed: 10s */
+  animation: flowPathMove 10s linear infinite;
+  /* Slower speed: 10s */
 }
 
 @keyframes flowPathMove {
-  0% { left: -100px; opacity: 0; }
-  5% { opacity: 1; }
-  95% { opacity: 1; }
-  100% { left: 100%; opacity: 0; }
+  0% {
+    left: -100px;
+    opacity: 0;
+  }
+
+  5% {
+    opacity: 1;
+  }
+
+  95% {
+    opacity: 1;
+  }
+
+  100% {
+    left: 100%;
+    opacity: 0;
+  }
 }
 
 /* Single Sharp Intense Glow Activation */
 @keyframes stepActivation {
-  0%, 15%, 35%, 100% { 
-    border-color: rgba(195, 163, 101, 0.2); 
+
+  0%,
+  15%,
+  35%,
+  100% {
+    border-color: rgba(195, 163, 101, 0.2);
     background: rgba(18, 20, 25, 0.9);
     color: #c3a365;
     box-shadow: none;
     transform: scale(1);
   }
-  20%, 30% { 
-    border-color: #e8d5a3; 
+
+  20%,
+  30% {
+    border-color: #e8d5a3;
     background: #c3a365;
-    color: #050507; /* Logo turns black here for visibility */
+    color: #050507;
+    /* Logo turns black here for visibility */
     box-shadow: 0 0 35px rgba(195, 163, 101, 0.8), 0 0 60px rgba(195, 163, 101, 0.4);
     transform: scale(1.2);
   }
 }
 
 @keyframes textActivation {
-  0%, 15%, 35%, 100% { color: #ffffff; text-shadow: none; opacity: 0.5; }
-  20%, 30% { color: #e8d5a3; text-shadow: 0 0 20px rgba(195, 163, 101, 0.8); opacity: 1; }
+
+  0%,
+  15%,
+  35%,
+  100% {
+    color: #ffffff;
+    text-shadow: none;
+    opacity: 0.5;
+  }
+
+  20%,
+  30% {
+    color: #e8d5a3;
+    text-shadow: 0 0 20px rgba(195, 163, 101, 0.8);
+    opacity: 1;
+  }
 }
 
-.item-1 .anchor-inner { animation: stepActivation 10s infinite; animation-delay: 0s; }
-.item-1 .step-content { animation: textActivation 10s infinite; animation-delay: 0s; }
+.item-1 .anchor-inner {
+  animation: stepActivation 10s infinite;
+  animation-delay: 0s;
+}
 
-.item-2 .anchor-inner { animation: stepActivation 10s infinite; animation-delay: 2.5s; }
-.item-2 .step-content { animation: textActivation 10s infinite; animation-delay: 2.5s; }
+.item-1 .step-content {
+  animation: textActivation 10s infinite;
+  animation-delay: 0s;
+}
 
-.item-3 .anchor-inner { animation: stepActivation 10s infinite; animation-delay: 5s; }
-.item-3 .step-content { animation: textActivation 10s infinite; animation-delay: 5s; }
+.item-2 .anchor-inner {
+  animation: stepActivation 10s infinite;
+  animation-delay: 2.5s;
+}
 
-.item-4 .anchor-inner { animation: stepActivation 10s infinite; animation-delay: 7.5s; }
-.item-4 .step-content { animation: textActivation 10s infinite; animation-delay: 7.5s; }
+.item-2 .step-content {
+  animation: textActivation 10s infinite;
+  animation-delay: 2.5s;
+}
+
+.item-3 .anchor-inner {
+  animation: stepActivation 10s infinite;
+  animation-delay: 5s;
+}
+
+.item-3 .step-content {
+  animation: textActivation 10s infinite;
+  animation-delay: 5s;
+}
+
+.item-4 .anchor-inner {
+  animation: stepActivation 10s infinite;
+  animation-delay: 7.5s;
+}
+
+.item-4 .step-content {
+  animation: textActivation 10s infinite;
+  animation-delay: 7.5s;
+}
 
 .flow-steps-container {
   display: grid;
@@ -295,7 +367,11 @@
     grid-template-columns: repeat(2, 1fr);
     gap: 4rem 2rem;
   }
-  .flow-path, .step-arrow { display: none; }
+
+  .flow-path,
+  .step-arrow {
+    display: none;
+  }
 }
 
 @media (max-width: 768px) {
@@ -303,12 +379,26 @@
     grid-template-columns: 1fr;
     gap: 5rem;
   }
-  .works-title { font-size: 2.8rem; }
-  .step-anchor { margin-bottom: 2rem; }
-  .step-title { font-size: 1.5rem; }
+
+  .works-title {
+    font-size: 2.8rem;
+  }
+
+  .step-anchor {
+    margin-bottom: 2rem;
+  }
+
+  .step-title {
+    font-size: 1.5rem;
+  }
 }
 
 @media (max-width: 480px) {
-  .works-section { padding: 5rem 0; }
-  .works-title { font-size: 2.2rem; }
+  .works-section {
+    padding: 5rem 0;
+  }
+
+  .works-title {
+    font-size: 2.2rem;
+  }
 }

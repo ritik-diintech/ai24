@@ -1,76 +1,399 @@
-.why-section {
+/* ======================================================================
+   WHY AI24 SECTION - Neural Advantage Network (Optimized)
+   ====================================================================== */
+
+.why-neural-section {
   position: relative;
-  background: var(--bg-card);
+  background: #000;
+  min-height: 450vh; /* Increased scroll for clearer transitions */
 }
 
-.why-content {
+/* ── Scroll Stagger Helper ── */
+.why-scroll-stagger {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.why-node-trigger {
+  height: 60vh; /* More breathing room for activations */
+}
+
+/* ── Sticky Viewport ── */
+.why-sticky-viewport {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+}
+
+.why-neural-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.neural-stars {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(white 1px, transparent 1px);
+  background-size: 80px 80px;
+  opacity: 0.1;
+}
+
+.neural-grid {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(rgba(195, 163, 101, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(195, 163, 101, 0.05) 1px, transparent 1px);
+  background-size: 10vw 10vh;
+  opacity: 0.2;
+}
+
+/* ── Luxury Header (Matched with Industries) ── */
+.why-header-lux {
+  position: absolute;
+  top: 8%;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 20;
+  padding: 0 5%;
+}
+
+.why-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.5rem 1.2rem;
+  background: rgba(195, 163, 101, 0.05);
+  border: 1px solid rgba(195, 163, 101, 0.2);
+  border-radius: 100px;
+  margin-bottom: 2rem;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: #c3a365;
+}
+
+.why-badge-dot {
+  width: 5px;
+  height: 5px;
+  background: #c3a365;
+  border-radius: 50%;
+  box-shadow: 0 0 10px #c3a365;
+}
+
+.why-header-main {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 4rem;
+}
+
+.why-title {
+  font-family: var(--font-heading, sans-serif);
+  font-size: 4rem;
+  font-weight: 300;
+  color: #ffffff;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.why-title span {
+  background: linear-gradient(135deg, #c3a365 0%, #e8d5a3 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.why-header-info {
+  max-width: 400px;
+  text-align: right;
+}
+
+.why-header-info p {
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 1rem;
+  font-weight: 300;
+  margin-bottom: 1rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.divider-line {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(195, 163, 101, 0.2));
+}
+
+/* ── Workspace (Hub + Info) ── */
+.why-neural-workspace {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 4rem;
   align-items: center;
-  background: linear-gradient(135deg, rgba(20, 20, 22, 0.6) 0%, rgba(10, 10, 11, 0.4) 100%);
-  padding: 4rem;
+  gap: 8rem;
+  width: 100%;
+  position: relative;
+  margin-top: 5rem; /* Space from top header */
 }
 
-.why-text h2 {
-  font-size: 3.2rem;
-  letter-spacing: -1.5px;
-  line-height: 1.1;
-  margin-bottom: 1.5rem;
-}
-
-.why-text p {
-  color: var(--text-secondary);
-  font-size: 1.1rem;
-  line-height: 1.8;
-}
-
-.why-list {
+/* ── Left side: Hub area ── */
+.neural-hub-area {
   display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
+  justify-content: center;
+  align-items: center;
+  padding-left: 5%;
 }
 
-.why-list li {
+.hub-core {
+  position: relative;
+  width: 180px;
+  height: 180px;
+}
+
+.hub-glow {
+  position: absolute;
+  inset: -60%;
+  background: radial-gradient(circle, rgba(195, 163, 101, 0.2) 0%, transparent 70%);
+  filter: blur(40px);
+}
+
+.hub-icon-wrap {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 30% 30%, rgba(30,30,30,0.9), rgba(10,10,10,1));
+  border: 1px solid rgba(195, 163, 101, 0.4);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  color: #c3a365;
+  box-shadow: 0 0 60px rgba(0, 0, 0, 0.8), inset 0 0 20px rgba(195, 163, 101, 0.1);
+}
+
+/* ── Nodes & Beams ── */
+.neural-node {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+}
+
+.node-point {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 10px;
+  height: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  transform: translate(calc(var(--tx) * 1.5), calc(var(--ty) * 1.5));
+  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.neural-node.active .node-point {
+  background: #fff;
+  border-color: #c3a365;
+  box-shadow: 0 0 25px #c3a365, 0 0 50px rgba(195, 163, 101, 0.3);
+  transform: translate(calc(var(--tx) * 1.5), calc(var(--ty) * 1.5)) scale(1.6);
+}
+
+.node-beam {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  height: 1px;
+  background: linear-gradient(90deg, #c3a365, transparent);
+  transform-origin: left center;
+  transform: rotate(calc(atan2(var(--ty), var(--tx)) * 1rad)) scaleX(0);
+  opacity: 0;
+  transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.neural-node.active .node-beam {
+  width: calc(sqrt(var(--tx)*var(--tx) + var(--ty)*var(--ty)) * 1.5);
+  transform: rotate(calc(atan2(var(--ty), var(--tx)) * 1rad)) scaleX(1);
+  opacity: 0.6;
+}
+
+/* ── Right side: Info Panel ── */
+.why-info-panel {
+  padding-right: 5%;
+}
+
+.info-card-lux {
+  padding: 5rem 4rem;
+  background: rgba(15, 15, 15, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(25px);
+  border-radius: 32px;
+  box-shadow: 0 40px 100px rgba(0, 0, 0, 0.6);
+}
+
+.info-meta {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.info-num {
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #c3a365;
+  background: rgba(195, 163, 101, 0.1);
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+}
+
+.info-slug {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.25em;
+  color: rgba(200, 180, 150, 0.4);
+}
+
+.info-title {
+  font-family: var(--font-heading);
+  font-size: 3.2rem;
+  font-weight: 300;
+  color: #fff;
+  margin-bottom: 2rem;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+
+.info-desc {
+  font-size: 1.15rem;
+  color: rgba(255, 255, 255, 0.5);
+  line-height: 1.8;
+  font-weight: 300;
+  margin-bottom: 4rem;
+}
+
+.info-cta {
+  background: transparent;
+  border: 1px solid rgba(195, 163, 101, 0.4);
+  color: #c3a365;
+  padding: 1.2rem 2.8rem;
+  border-radius: 100px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
   display: flex;
   align-items: center;
   gap: 1.2rem;
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid var(--border-subtle);
-  padding: 1.25rem 1.5rem;
-  border-radius: 8px;
-  transition: all 0.3s ease;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.why-list li:hover {
-  background: rgba(195, 163, 101, 0.05);
-  border-color: rgba(195, 163, 101, 0.3);
-  transform: translateX(10px);
+.info-cta:hover {
+  background: #c3a365;
+  color: #000;
+  transform: translateY(-5px);
 }
 
-.why-icon {
-  color: var(--accent-gold);
+/* ── Bottom Bar ── */
+.why-neural-bar {
+  position: absolute;
+  bottom: 6%;
+  left: 5%;
+  right: 5%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-.why-list span {
-  font-family: var(--font-heading);
-  font-weight: 600;
-  font-size: 1.1rem;
-  color: var(--text-primary);
+.bar-stat {
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+}
+
+.bar-stat .label {
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: rgba(255, 255, 255, 0.2);
+}
+
+.bar-progress {
+  width: 250px;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #c3a365, #e8d5a3);
+  box-shadow: 0 0 10px rgba(195, 163, 101, 0.5);
+}
+
+.bar-mode {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: rgba(255, 255, 255, 0.2);
+}
+
+.bar-mode span {
+  color: #c3a365;
+  font-weight: 700;
+  margin-left: 0.8rem;
+}
+
+/* ── Responsive ── */
+@media (max-width: 1400px) {
+  .why-title { font-size: 3.5rem; }
+  .info-title { font-size: 2.8rem; }
+  .why-neural-workspace { gap: 4rem; }
 }
 
 @media (max-width: 991px) {
-  .why-content {
-    grid-template-columns: 1fr;
-    gap: 3rem;
-  }
+  .why-neural-section { min-height: 450vh; }
+  .why-sticky-viewport { height: 100vh; height: 100dvh; display: flex; flex-direction: column; justify-content: center; padding: 5rem 0 1rem; }
+  .why-header-lux { position: relative; top: 0; left: 0; padding: 0 5% 1.5rem; flex-shrink: 0; }
+  .why-header-main { flex-direction: column; align-items: flex-start; gap: 1rem; }
+  .why-header-info { text-align: left; display: none; } /* Hide extra info on mobile to save vertical space */
+  .why-neural-workspace { display: flex; flex-direction: column; grid-template-columns: 1fr; gap: 2rem; margin-top: 0; flex: 1; justify-content: center; }
+  .neural-hub-area { padding: 0; flex-shrink: 0; }
+  .why-info-panel { padding: 0 5%; flex-shrink: 0; }
+  .hub-core { width: 130px; height: 130px; margin: 0 auto; }
+  .node-point { transform: translate(calc(var(--tx) * 0.7), calc(var(--ty) * 0.7)); }
+  .neural-node.active .node-point { transform: translate(calc(var(--tx) * 0.7), calc(var(--ty) * 0.7)) scale(1.4); }
+  .neural-node.active .node-beam { width: calc(sqrt(var(--tx)*var(--tx) + var(--ty)*var(--ty)) * 0.7); }
+  .info-card-lux { padding: 2rem; border-radius: 20px; }
+  .why-neural-bar { display: none; }
 }
 
-@media (max-width: 768px) {
-  .why-content {
-    padding: 2.5rem 1.5rem;
-  }
-  .why-text h2 {
-    font-size: 2.4rem;
-  }
+@media (max-width: 576px) {
+  .why-title { font-size: 2.2rem; }
+  .why-badge { margin-bottom: 0.5rem; }
+  .why-sticky-viewport { padding: 4rem 0 1rem; }
+  .info-title { font-size: clamp(1.4rem, 6vw, 1.8rem); margin-bottom: 0.8rem; word-break: break-word; hyphens: auto; padding-right: 1.5rem; }
+  .info-desc { margin-bottom: 1.5rem; font-size: 0.95rem; line-height: 1.6; }
+  .info-cta { padding: 0.9rem 1.2rem; font-size: 0.7rem; justify-content: center; width: 100%; }
+  .info-card-lux { padding: 1.5rem; }
+  .hub-core { width: 100px; height: 100px; }
+  .why-neural-workspace { gap: 1rem; }
+  .node-point { transform: translate(calc(var(--tx) * 0.55), calc(var(--ty) * 0.55)); }
+  .neural-node.active .node-point { transform: translate(calc(var(--tx) * 0.55), calc(var(--ty) * 0.55)) scale(1.3); }
+  .neural-node.active .node-beam { width: calc(sqrt(var(--tx)*var(--tx) + var(--ty)*var(--ty)) * 0.55); }
 }

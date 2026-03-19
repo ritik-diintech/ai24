@@ -1,8 +1,13 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Search, PenTool, Rocket, TrendingUp, ChevronRight } from 'lucide-react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import './HowItWorks.css';
 
+gsap.registerPlugin(ScrollTrigger);
+
 export default function HowItWorks() {
+  const sectionRef = useRef(null);
   const steps = [
     { num: "01", title: "Discover", desc: "Audit business model, funnel architecture, and growth gaps.", icon: <Search size={22} strokeWidth={1.5} /> },
     { num: "02", title: "Design", desc: "Build acquisition, automation, and conversion architecture.", icon: <PenTool size={22} strokeWidth={1.5} /> },
@@ -10,8 +15,80 @@ export default function HowItWorks() {
     { num: "04", title: "Scale", desc: "Optimize performance and expand revenue systems predictably.", icon: <TrendingUp size={22} strokeWidth={1.5} /> }
   ];
 
+  useEffect(() => {
+    let ctx = gsap.context(() => {
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 75%",
+        }
+      });
+
+      // Header Animation
+      tl.fromTo('.works-badge',
+        { y: -30, opacity: 0, scale: 0.8 },
+        { y: 0, opacity: 1, scale: 1, duration: 1, ease: "elastic.out(1, 0.5)" }
+      )
+      .fromTo('.works-title',
+        { y: 50, opacity: 0, rotationX: 45, transformPerspective: 1000 },
+        { y: 0, opacity: 1, rotationX: 0, duration: 1.2, ease: "power4.out" },
+        "-=0.7"
+      )
+      .fromTo('.works-sub',
+        { y: 30, opacity: 0, filter: "blur(5px)" },
+        { y: 0, opacity: 1, filter: "blur(0px)", duration: 1, ease: "power3.out" },
+        "-=0.8"
+      )
+      .fromTo('.works-ambient',
+        { scale: 0.8, opacity: 0 },
+        { scale: 1, opacity: 1, duration: 2.5, ease: "power2.out" },
+        "-=1.5"
+      );
+
+      // Flow Path Line Drawing
+      tl.fromTo('.flow-path',
+        { scaleX: 0, transformOrigin: "left center" },
+        { scaleX: 1, duration: 1.5, ease: "power2.inOut" },
+        "-=0.5"
+      );
+
+      // Steps Staggering
+      const items = gsap.utils.toArray('.flow-step-item');
+      items.forEach((item, i) => {
+        // Drop in the anchor
+        const anchor = item.querySelector('.step-anchor');
+        tl.fromTo(anchor,
+          { scale: 0, rotation: -45, y: -20, opacity: 0 },
+          { scale: 1, rotation: 0, y: 0, opacity: 1, duration: 0.8, ease: "back.out(2)" },
+          i === 0 ? "-=1" : "-=0.6"
+        );
+
+        // Slide the content up
+        const content = item.querySelector('.step-content');
+        tl.fromTo(content,
+          { y: 30, opacity: 0, filter: "blur(4px)" },
+          { y: 0, opacity: 1, filter: "blur(0px)", duration: 0.8, ease: "power3.out" },
+          "-=0.6"
+        );
+
+        // Pop in the arrow if exists
+        const arrow = item.querySelector('.step-arrow');
+        if (arrow) {
+          tl.fromTo(arrow,
+            { x: -10, opacity: 0, scale: 0.5 },
+            { x: 0, opacity: 1, scale: 1, duration: 0.6, ease: "back.out(2)" },
+            "-=0.4"
+          );
+        }
+      });
+
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section className="works-section section-padding gsap-reveal">
+    <section id="methodology" className="works-section" ref={sectionRef}>
       <div className="works-ambient"></div>
       
       <div className="container relative z-10">

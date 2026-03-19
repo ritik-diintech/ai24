@@ -1,115 +1,304 @@
-.case-header {
-  margin-bottom: 5rem;
+/* ======================================================================
+   CASE STUDIES SECTION - Premium Performance Grid
+   ====================================================================== */
+
+.case-studies-section {
+  position: relative;
+  background: transparent;
+  padding: 10rem 0;
+  overflow: hidden;
 }
 
+.case-bg-elements {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.case-glow-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80vw;
+  height: 80vw;
+  background: radial-gradient(circle, rgba(195, 163, 101, 0.03) 0%, transparent 70%);
+  filter: blur(120px);
+}
+
+.case-grid-lines {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(to right, rgba(195, 163, 101, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(195, 163, 101, 0.03) 1px, transparent 1px);
+  background-size: 100px 100px;
+  opacity: 0.5;
+}
+
+/* ── Header Styling (Matched with Industries) ── */
+.case-header-top {
+  margin-bottom: 6rem;
+}
+
+.case-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.5rem 1.2rem;
+  background: rgba(195, 163, 101, 0.05);
+  border: 1px solid rgba(195, 163, 101, 0.2);
+  border-radius: 100px;
+  margin-bottom: 2.5rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: #c3a365;
+}
+
+.case-badge-dot {
+  width: 5px;
+  height: 5px;
+  background: #c3a365;
+  border-radius: 50%;
+  box-shadow: 0 0 10px #c3a365;
+}
+
+.case-header-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 4rem;
+}
+
+.case-main-title {
+  font-family: var(--font-heading, sans-serif);
+  font-size: 4.5rem;
+  font-weight: 300; /* Matched weight */
+  color: #ffffff;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.case-main-title span {
+  background: linear-gradient(135deg, #c3a365 0%, #e8d5a3 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.case-description {
+  max-width: 450px;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 1.1rem;
+  line-height: 1.6;
+  font-weight: 300;
+  margin-bottom: 0.5rem;
+}
+
+/* ── Luxury Card Grid ── */
 .case-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 2rem;
+  gap: 2.5rem;
 }
 
-.case-card {
-  padding: 3rem;
+.case-card-luxury {
+  position: relative;
+  z-index: 1;
+}
+
+.case-card-inner {
+  height: 100%;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 32px;
+  padding: 3.5rem;
   display: flex;
   flex-direction: column;
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  backdrop-filter: blur(10px);
+  overflow: hidden;
 }
 
-.case-card-top {
+.case-card-glow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at top right, rgba(195, 163, 101, 0.1), transparent 60%);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  z-index: -1;
+}
+
+.case-card-luxury:hover .case-card-inner {
+  transform: translateY(-10px);
+  border-color: rgba(195, 163, 101, 0.3);
+  background: rgba(255, 255, 255, 0.03);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+}
+
+.case-card-luxury:hover .case-card-glow {
+  opacity: 1;
+}
+
+/* ── Card Header ── */
+.case-card-header {
   display: flex;
   justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 3rem;
+}
+
+.case-card-icon {
+  width: 56px;
+  height: 56px;
+  background: rgba(195, 163, 101, 0.08);
+  border: 1px solid rgba(195, 163, 101, 0.2);
+  border-radius: 16px;
+  display: flex;
   align-items: center;
-  margin-bottom: 1.5rem;
+  justify-content: center;
+  color: #c3a365;
 }
 
-.case-industry {
-  font-size: 0.8rem;
+.case-card-meta {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.case-industry-tag {
+  font-size: 0.7rem;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 2px;
-  color: var(--accent-gold);
-  font-weight: 600;
+  letter-spacing: 0.15em;
+  color: #c3a365;
+  background: rgba(195, 163, 101, 0.05);
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
 }
 
-.case-arrow {
-  color: var(--text-secondary);
+.case-card-arrow {
+  color: rgba(255, 255, 255, 0.2);
   transition: all 0.3s ease;
 }
 
-.case-card:hover .case-arrow {
-  color: var(--accent-gold);
-  transform: translate(2px, -2px);
+.case-card-luxury:hover .case-card-arrow {
+  color: #c3a365;
+  transform: translate(3px, -3px);
 }
 
-.case-card h3 {
-  font-size: 1.5rem;
-  margin-bottom: 2rem;
-  color: var(--text-primary);
-  border-bottom: 1px solid var(--border-subtle);
-  padding-bottom: 1.5rem;
-}
-
-.case-details {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  margin-bottom: 2rem;
+/* ── Card Body ── */
+.case-card-body {
   flex-grow: 1;
 }
 
-.case-detail-row {
-  display: flex;
-  flex-direction: column;
-  gap: 0.3rem;
+.case-card-client {
+  font-family: var(--font-heading, sans-serif);
+  font-size: 1.8rem;
+  color: #ffffff;
+  margin-bottom: 2rem;
+  font-weight: 300;
+  letter-spacing: -0.01em;
 }
 
-.detail-label {
-  font-size: 0.8rem;
-  text-transform: uppercase;
-  color: var(--text-secondary);
-  letter-spacing: 1px;
+.case-challenge-box, .case-solution-box {
+  margin-bottom: 2rem;
 }
 
-.detail-text {
-  font-size: 0.95rem;
-  color: var(--text-primary);
-  line-height: 1.6;
-}
-
-.case-metrics {
-  background: rgba(195,163,101,0.05);
-  border: 1px solid rgba(195,163,101,0.2);
-  border-radius: 12px;
-  padding: 1.5rem;
-  margin-top: auto;
-}
-
-.metric-number {
-  font-size: 3rem;
-  font-family: var(--font-heading);
+.case-label {
+  display: block;
+  font-size: 0.65rem;
   font-weight: 700;
-  color: var(--accent-gold);
-  line-height: 1;
-  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: rgba(195, 163, 101, 0.6);
+  margin-bottom: 0.8rem;
 }
 
-.metric-label {
+.case-challenge-box p, .case-solution-box p {
   font-size: 1rem;
-  font-weight: 600;
-  color: var(--text-primary);
-  margin-bottom: 0.5rem;
+  color: rgba(255, 255, 255, 0.5);
+  line-height: 1.6;
+  font-weight: 300;
 }
 
-.metric-sub {
-  font-size: 0.85rem;
-  color: var(--text-secondary);
+/* ── Card Footer ── */
+.case-card-footer {
+  margin-top: 1rem;
+  padding-top: 2.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.case-metric-value {
+  font-family: var(--font-heading, sans-serif);
+  font-size: 2.5rem;
+  font-weight: 300;
+  color: #c3a365;
+  line-height: 1;
+  margin-bottom: 0.3rem;
+}
+
+.case-metric-label {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.4);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+}
+
+.case-metric-divider {
+  width: 1px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.case-metric-subtext {
+  font-size: 0.9rem;
+  color: #ffffff;
+  font-weight: 500;
+}
+
+/* ── Responsive ── */
+@media (max-width: 1200px) {
+  .case-main-title {
+    font-size: 3.5rem;
+  }
+  
+  .case-grid {
+    gap: 1.5rem;
+  }
+  
+  .case-card-inner {
+    padding: 2.5rem;
+  }
 }
 
 @media (max-width: 991px) {
   .case-grid {
     grid-template-columns: repeat(2, 1fr);
   }
+  
+  .case-header-flex {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+  }
 }
 
 @media (max-width: 768px) {
+  .case-main-title {
+    font-size: 2.8rem;
+  }
+  
   .case-grid {
     grid-template-columns: 1fr;
   }

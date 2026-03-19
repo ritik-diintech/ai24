@@ -4,7 +4,8 @@
 
 .growth-os-section {
   position: relative;
-  background: #050507;
+  background: transparent;
+  /* overridden */
   padding: 8rem 0;
   overflow: hidden;
   z-index: 10;
@@ -59,8 +60,15 @@
 }
 
 @keyframes pulseGoldOS {
-  0% { transform: scale(1); opacity: 1; }
-  100% { transform: scale(2.5); opacity: 0; }
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(2.5);
+    opacity: 0;
+  }
 }
 
 .os-title {
@@ -129,8 +137,10 @@
 
 .node-glow-ring {
   position: absolute;
-  top: 50%; left: 50%;
-  width: 0%; height: 0%;
+  top: 50%;
+  left: 50%;
+  width: 0%;
+  height: 0%;
   background: radial-gradient(circle, rgba(195, 163, 101, 0.1) 0%, transparent 60%);
   transform: translate(-50%, -50%);
   border-radius: 50%;
@@ -220,32 +230,55 @@
 .connector-line::after {
   content: '';
   position: absolute;
-  top: 0; left: 0;
-  width: 100%; height: 15px;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 15px;
   background: #e8d5a3;
   box-shadow: 0 0 10px #c3a365, 0 0 20px #e8d5a3;
   animation: energyFlow 2s linear infinite;
 }
 
 @keyframes energyFlow {
-  0% { transform: translateY(-15px); opacity: 0; }
-  20% { opacity: 1; }
-  80% { opacity: 1; }
-  100% { transform: translateY(50px); opacity: 0; }
+  0% {
+    transform: translateY(-15px);
+    opacity: 0;
+  }
+
+  20% {
+    opacity: 1;
+  }
+
+  80% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(50px);
+    opacity: 0;
+  }
 }
 
 .connector-arrow {
   color: #c3a365;
   margin-top: -12px;
-  background: #050507;
+  background: transparent;
+  /* overridden */
   border-radius: 50%;
   z-index: 2;
   animation: bounceArrow 2s infinite ease-in-out;
 }
 
 @keyframes bounceArrow {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(5px); }
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(5px);
+  }
 }
 
 /* ── Responsive ── */
@@ -253,18 +286,26 @@
   .os-vertical-flow {
     padding: 0 1rem;
   }
+
   .node-glass-panel {
     padding: 1.25rem 1.5rem;
   }
+
   .node-glass-panel h3 {
     font-size: 1.1rem;
   }
+
   .os-title {
     font-size: 2.8rem;
   }
 }
 
 @media (max-width: 480px) {
-  .growth-os-section { padding: 5rem 0; }
-  .os-title { font-size: 2.2rem; }
+  .growth-os-section {
+    padding: 5rem 0;
+  }
+
+  .os-title {
+    font-size: 2.2rem;
+  }
 }

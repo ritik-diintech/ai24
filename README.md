@@ -1,27 +1,92 @@
-# AI 24: Intelligent Automation & Growth Architecture
+# AI24 Web
 
-AI 24 is a cutting-edge platform dedicated to empowering businesses through intelligent automation, advanced AI setups, and strategic growth architecture. We specialize in transforming complex business challenges into streamlined, automated workflows that drive unprecedented scale and efficiency.
+A modern, animated, and responsive corporate website built with React and Vite. 
 
-## 🌟 Our Vision
+## 🚀 Features
 
-To be the global leader in AI-driven business transformation, helping organizations transition from traditional operational models to dynamic, AI-first ecosystems. 
+- **Modern Tech Stack**: Bootstrapped with React 19 and Vite for lightning-fast development and optimized production builds.
+- **Smooth Animations**: Integrated with `framer-motion` for page transitions and `gsap` for complex UI animations.
+- **Smooth Scrolling**: Implements `lenis` for a seamless and premium scrolling experience across all devices.
+- **Dynamic Routing**: Uses `react-router-dom` for client-side routing, featuring smooth `AnimatePresence` transitions between pages.
+- **Engaging UI Elements**: Features custom cursors, interactive background layers, and beautiful SVG icons via `lucide-react`.
+- **Responsive Design**: Fully responsive layout ensuring a consistent experience on desktop, tablet, and mobile.
+- **Multiple Pages**: Includes sections for Home, About, Capabilities, Industries, Case Studies, Insights, Careers, Contact, Global Presence, and Automation Solutions.
 
-## 🚀 Core Capabilities
+## 🛠️ Tech Stack
 
-- **AI Call Setup & Automation:** Seamlessly integrate AI voice agents and smart communication systems to handle customer interactions, lead qualification, and support at scale without human bottlenecks.
-- **Growth OS:** A comprehensive operating system designed to orchestrate sales, marketing, and operational data into one cohesive, automated engine.
-- **Talent Architecture:** Leverage AI to streamline recruitment, onboarding, and employee development, ensuring that your team grows efficiently alongside your business.
-- **Diagnostic Solutions:** Identify operational inefficiencies and pinpoint exactly where AI and automation can deliver the highest ROI in the shortest time frame.
-- **Industry-Specific AI Apps:** Custom AI solutions tailored for various industries, from healthcare and real estate to e-commerce and finance.
+- **Framework**: [React 19](https://react.dev/)
+- **Build Tool**: [Vite](https://vitejs.dev/)
+- **Routing**: [React Router](https://reactrouter.com/)
+- **Animations**: [Framer Motion](https://www.framer.com/motion/) & [GSAP](https://gsap.com/)
+- **Smooth Scroll**: [Lenis](https://lenis.studiofreight.com/)
+- **Icons**: [Lucide React](https://lucide.dev/)
 
-## 🏢 AI 24 Labs
+## 📂 Project Structure
 
-Our dedicated research and development hub, *AI 24 Labs*, continuously tests and deploys the latest advancements in artificial intelligence. This ensures our clients always have access to state-of-the-art tools, algorithms, and automated workflows before they hit the mainstream market.
+```text
+src/
+├── components/       # Reusable UI components (Navbar, Footer, CustomCursor, etc.)
+├── pages/            # Page components for each route (Home, About, Contact, etc.)
+├── App.jsx           # Main application component with routing and smooth scroll setup
+├── main.jsx          # Application entry point
+└── index.css         # Global styles and tailwind/custom CSS variables
+```
 
-## 🌍 Global Presence
+## 🏃‍♂️ Getting Started
 
-With a footprint that spans across major tech hubs worldwide, AI 24 is perfectly positioned to support enterprise clients, ambitious startups, and established organizations regardless of their geographical location.
+### Prerequisites
 
----
+Ensure you have [Node.js](https://nodejs.org/) installed on your machine.
 
-*Welcome to the future of business operations.*
+### Installation
+
+1. Clone the repository and navigate to the project directory:
+
+```bash
+cd ai24web
+```
+
+2. Install the dependencies:
+
+```bash
+npm install
+# or
+yarn install
+# or
+pnpm install
+```
+
+### Running Locally
+
+To start the development server with Hot Module Replacement (HMR):
+
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+```
+
+Open your browser and navigate to the URL provided in the terminal (usually `http://localhost:5173`).
+
+### Building for Production
+
+To create an optimized production build:
+
+```bash
+npm run build
+# or
+yarn build
+# or
+pnpm build
+```
+
+The build output will be generated in the `dist` directory, ready to be deployed.
+
+## 📝 Scripts
+
+- `npm run dev`: Starts the development server.
+- `npm run build`: Builds the app for production.
+- `npm run lint`: Runs ESLint to check for code quality issues.
+- `npm run preview`: Locally previews the production build.

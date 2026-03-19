@@ -11,7 +11,7 @@
   padding: 100px 0 80px;
   overflow-x: clip;
   overflow-y: visible;
-  background: #050507;
+  background: transparent; /* overridden */
 }
 
 /* ── Background Layers ─────────────────────────────────────────────── */

@@ -1,53 +1,236 @@
-.scale-section {
+/* ======================================================================
+   BUILT FOR SCALE - Structural Blueprint Design
+   ====================================================================== */
+
+.built-scale-section {
   position: relative;
-  background: linear-gradient(0deg, var(--bg-card) 0%, var(--bg-dark) 100%);
+  background: transparent;
+  padding: 10rem 0;
+  overflow: hidden;
 }
 
-.scale-content h2 {
-  font-size: 3.5rem;
-  letter-spacing: -1.5px;
-  margin-bottom: 2rem;
+.scale-bg-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
 }
 
-.scale-desc {
-  font-size: 1.15rem;
-  color: var(--text-secondary);
-  max-width: 700px;
-  margin: 0 auto 4rem;
-  line-height: 1.8;
+.scale-blueprint-grid {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(rgba(195, 163, 101, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(195, 163, 101, 0.03) 1px, transparent 1px);
+  background-size: 80px 80px;
+  opacity: 0.5;
 }
 
-.scale-grid {
+.scale-gradient-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80vw;
+  height: 80vh;
+  background: radial-gradient(circle, rgba(195, 163, 101, 0.05) 0%, transparent 70%);
+  filter: blur(80px);
+}
+
+/* ── Header Styling ── */
+.scale-header-wrap {
+  margin-bottom: 6rem;
+}
+
+.scale-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.5rem 1.2rem;
+  background: rgba(195, 163, 101, 0.05);
+  border: 1px solid rgba(195, 163, 101, 0.2);
+  border-radius: 100px;
+  margin-bottom: 2.5rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: #c3a365;
+}
+
+.badge-dot {
+  width: 5px;
+  height: 5px;
+  background: #c3a365;
+  border-radius: 50%;
+  box-shadow: 0 0 10px #c3a365;
+}
+
+.scale-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 4rem;
+}
+
+.scale-main-title {
+  font-family: var(--font-heading, sans-serif);
+  font-size: 4.5rem;
+  font-weight: 300;
+  color: #ffffff;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.scale-main-title span {
+  background: linear-gradient(135deg, #c3a365 0%, #e8d5a3 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.scale-header-desc {
+  max-width: 450px;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 1.1rem;
+  line-height: 1.7;
+  font-weight: 300;
+  margin-bottom: 0.5rem;
+}
+
+/* ── Pillars Grid ── */
+.scale-pillars-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1.5rem;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2.5rem;
 }
 
-.scale-card {
-  padding: 2.5rem 1.5rem;
-  text-align: center;
+.scale-pillar-card {
+  height: 100%;
 }
 
-.scale-card h3 {
-  font-size: 1.25rem;
-  color: var(--accent-gold);
-  margin-bottom: 1rem;
+.pillar-inner {
+  height: 100%;
+  padding: 4rem;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.scale-card p {
-  font-size: 0.95rem;
-  color: var(--text-secondary);
-  line-height: 1.6;
+.scale-pillar-card:hover .pillar-inner {
+  transform: translateY(-10px);
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(195, 163, 101, 0.3);
+}
+
+.pillar-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 3rem;
+}
+
+.pillar-icon-box {
+  width: 54px;
+  height: 54px;
+  background: rgba(195, 163, 101, 0.08);
+  border: 1px solid rgba(195, 163, 101, 0.2);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #c3a365;
+  transition: all 0.4s ease;
+}
+
+.scale-pillar-card:hover .pillar-icon-box {
+  background: #c3a365;
+  color: #000;
+  transform: scale(1.1);
+}
+
+.pillar-tag {
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.pillar-title {
+  font-family: var(--font-heading, sans-serif);
+  font-size: 2rem;
+  color: #fff;
+  margin-bottom: 1.5rem;
+  font-weight: 300;
+}
+
+.pillar-desc {
+  font-size: 1.05rem;
+  color: rgba(255, 255, 255, 0.5);
+  line-height: 1.8;
+  font-weight: 300;
+  margin-bottom: 3rem;
+}
+
+.pillar-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+}
+
+.pillar-link {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #c3a365;
+  cursor: pointer;
+}
+
+.pillar-blueprint-lines {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 60px;
+  height: 60px;
+  pointer-events: none;
+}
+
+.b-line {
+  position: absolute;
+  background: rgba(195, 163, 101, 0.2);
+}
+
+.h-line {
+  bottom: 20px;
+  right: 0;
+  width: 100%;
+  height: 1px;
+}
+
+.v-line {
+  right: 20px;
+  bottom: 0;
+  width: 1px;
+  height: 100%;
+}
+
+/* ── Responsive ── */
+@media (max-width: 1200px) {
+  .scale-main-title { font-size: 3.5rem; }
 }
 
 @media (max-width: 991px) {
-  .scale-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
+  .scale-title-row { flex-direction: column; align-items: flex-start; gap: 1.5rem; }
+  .scale-pillars-grid { grid-template-columns: 1fr; }
+  .pillar-inner { padding: 3rem; }
 }
 
 @media (max-width: 768px) {
-  .scale-grid {
-    grid-template-columns: 1fr;
-  }
+  .scale-main-title { font-size: 2.8rem; }
 }

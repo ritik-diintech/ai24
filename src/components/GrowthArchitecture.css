@@ -4,7 +4,7 @@
 
 .architecture-section {
   position: relative;
-  background: #050507;
+  background: transparent; /* overridden */
   padding: 8rem 0;
   overflow: hidden;
   z-index: 10;
@@ -107,7 +107,7 @@
 .arch-card-premium {
   position: relative;
   border-radius: 24px;
-  background: #0a0c10;
+  background: transparent; /* overridden */
   z-index: 1;
   transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   min-height: 320px;

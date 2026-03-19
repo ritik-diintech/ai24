@@ -5,7 +5,7 @@
 .hgp-section {
   position: relative;
   padding: 8rem 0 6rem;
-  background: #050507; /* Match hero dark background */
+  background: transparent; /* overridden */ /* Match hero dark background */
   overflow: hidden;
   z-index: 1;
 }

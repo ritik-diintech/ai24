@@ -1,67 +1,201 @@
-.vision-section {
+/* ======================================================================
+   FOUNDER VISION - Vision Horizon
+   ====================================================================== */
+
+.vision-horizon-section {
   position: relative;
-  background: var(--bg-card);
-  border-top: 1px solid var(--border-subtle);
-  border-bottom: 1px solid var(--border-subtle);
+  background: #000;
+  padding: 15rem 0;
+  overflow: hidden;
 }
 
-.vision-content {
-  max-width: 900px;
-  margin: 0 auto;
-  text-align: center;
-  position: relative;
+.horizon-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
 }
 
-.quote-icon {
-  color: rgba(195,163,101,0.2);
-  margin-bottom: 2rem;
+.horizon-line {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(195, 163, 101, 0.4), transparent);
+  transform: translateY(-50%);
+  opacity: 0.5;
 }
 
-.vision-text {
-  font-size: 3.5rem;
-  letter-spacing: -1.5px;
-  line-height: 1.2;
-  margin-bottom: 2rem;
-  color: var(--text-primary);
+.horizon-glow-top, .horizon-glow-bottom {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100vw;
+  height: 40vh;
+  filter: blur(120px);
 }
 
-.highlight-text {
-  background: var(--gold-gradient);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+.horizon-glow-top {
+  top: -10%;
+  background: radial-gradient(circle, rgba(195, 163, 101, 0.08) 0%, transparent 70%);
 }
 
-.vision-sub {
-  font-size: 1.2rem;
-  color: var(--text-secondary);
-  line-height: 1.8;
-  max-width: 700px;
-  margin: 0 auto 3rem;
+.horizon-glow-bottom {
+  bottom: -10%;
+  background: radial-gradient(circle, rgba(195, 163, 101, 0.05) 0%, transparent 70%);
 }
 
-.vision-author {
+.horizon-particles {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+  background-size: 50px 50px;
+  opacity: 0.2;
+}
+
+/* ── Content Wrap ── */
+.vision-horizon-wrap {
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 4rem;
 }
 
-.vision-author strong {
+.vision-quote-box {
+  margin-bottom: 1rem;
+}
+
+.vision-quote-mark {
+  color: #c3a365;
+  filter: drop-shadow(0 0 15px rgba(195, 163, 101, 0.4));
+  opacity: 0.8;
+}
+
+.vision-manifesto-container {
+  max-width: 1000px;
+  text-align: center;
+}
+
+.vision-main-text {
+  font-family: var(--font-heading, sans-serif);
+  font-size: 4rem;
+  font-weight: 300;
+  color: #ffffff;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  margin-bottom: 4rem;
+}
+
+.manifesto-word {
+  display: inline-block;
+  white-space: pre;
+}
+
+.vision-description-box {
+  display: inline-flex;
+  align-items: center;
+  gap: 2rem;
+  max-width: 650px;
+  text-align: left;
+}
+
+.vision-vertical-divider {
+  width: 1px;
+  height: 60px;
+  background: #c3a365;
+  box-shadow: 0 0 15px rgba(195, 163, 101, 0.5);
+}
+
+.vision-description-box p {
+  font-size: 1.15rem;
+  color: rgba(255, 255, 255, 0.5);
+  line-height: 1.8;
+  font-weight: 300;
+}
+
+/* ── Luxury Signature Area ── */
+.vision-author-luxury {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.author-details-wrap {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.author-label {
+  display: block;
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  color: #c3a365;
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+.author-display-name {
   font-family: var(--font-heading);
-  font-size: 1.25rem;
-  color: var(--text-primary);
-  margin-bottom: 0.2rem;
+  font-size: 2rem;
+  font-weight: 300;
+  color: #fff;
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.1em;
 }
 
-.vision-author span {
-  color: var(--accent-gold);
-  font-size: 1rem;
-  letter-spacing: 1px;
+.author-display-role {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.3);
+  letter-spacing: 0.2em;
   text-transform: uppercase;
 }
 
+.luxury-decorative-elements {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.dec-circle {
+  width: 40px;
+  height: 40px;
+  border: 1px solid rgba(195, 163, 101, 0.2);
+  border-radius: 50%;
+  position: relative;
+}
+
+.dec-circle::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 4px;
+  height: 4px;
+  background: #c3a365;
+  border-radius: 50%;
+  box-shadow: 0 0 10px #c3a365;
+}
+
+.dec-line {
+  width: 1px;
+  height: 80px;
+  background: linear-gradient(to bottom, rgba(195, 163, 101, 0.5), transparent);
+}
+
+/* ── Responsive ── */
+@media (max-width: 991px) {
+  .vision-main-text { font-size: 3rem; }
+  .vision-description-box { flex-direction: column; text-align: center; gap: 1.5rem; }
+  .vision-vertical-divider { width: 40px; height: 1px; }
+}
+
 @media (max-width: 768px) {
-  .vision-text {
-    font-size: 2.2rem;
-  }
+  .vision-main-text { font-size: 2.2rem; }
+  .vision-horizon-section { padding: 10rem 0; }
+  .author-display-name { font-size: 1.5rem; }
 }

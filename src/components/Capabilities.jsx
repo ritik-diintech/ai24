@@ -1,9 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Target, Cpu, LayoutTemplate, ActivitySquare, TrendingUp, Plus, Minus } from 'lucide-react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import './Capabilities.css';
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function Capabilities() {
   const [activeIndex, setActiveIndex] = useState(0);
+  const sectionRef = useRef(null);
 
   const caps = [
     {
@@ -38,8 +43,60 @@ export default function Capabilities() {
     }
   ];
 
+  useEffect(() => {
+    let ctx = gsap.context(() => {
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 75%",
+        }
+      });
+
+      // Header Animation
+      tl.fromTo('.cap-badge',
+        { y: -30, opacity: 0, scale: 0.8 },
+        { y: 0, opacity: 1, scale: 1, duration: 1, ease: "elastic.out(1, 0.5)" }
+      )
+      .fromTo('.cap-main-title',
+        { y: 50, opacity: 0, rotationX: 45, transformPerspective: 1000 },
+        { y: 0, opacity: 1, rotationX: 0, duration: 1.2, ease: "power4.out" },
+        "-=0.7"
+      );
+
+      // Slats Stagger Reveal
+      // We'll stagger each slat swinging up from below
+      tl.fromTo('.cap-slat',
+        { y: 60, opacity: 0, rotationX: -15, transformPerspective: 800 },
+        { y: 0, opacity: 1, rotationX: 0, duration: 1, stagger: 0.15, ease: "back.out(1.2)" },
+        "-=1"
+      );
+
+      // Slat Content internal slide
+      const slats = gsap.utils.toArray('.cap-slat');
+      slats.forEach((slat, index) => {
+        const num = slat.querySelector('.slat-num');
+        const titles = slat.querySelector('.slat-titles');
+        const iconCircle = slat.querySelector('.slat-icon-circle');
+
+        tl.fromTo([num, titles],
+          { x: -20, opacity: 0 },
+          { x: 0, opacity: 1, duration: 0.8, ease: "power2.out", stagger: 0.05 },
+          `<${index * 0.1}`
+        )
+        .fromTo(iconCircle,
+          { scale: 0, rotation: -45 },
+          { scale: 1, rotation: 0, duration: 0.6, ease: "back.out(2)" },
+          "<0.1"
+        );
+      });
+
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section className="capabilities-section section-padding">
+    <section id="capabilities" className="capabilities-section" ref={sectionRef}>
       <div className="cap-bg-elements">
         <div className="cap-dynamic-glow" style={{ top: `${(activeIndex * 20) + 10}%` }}></div>
       </div>
