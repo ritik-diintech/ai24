@@ -469,7 +469,8 @@
 .arch-svg {
   display: block;
   width: 100%;
-  height: auto;
+  height: 100%;
+  min-height: 480px;
   pointer-events: none;
 }
 
@@ -596,7 +597,7 @@
 /* Glass Label */
 .visual-glass-label {
   position: absolute;
-  bottom: 20px;
+  bottom: -55px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
@@ -677,9 +678,14 @@
   }
 
   .hero-visual {
-    height: 500px;
+    min-height: 540px;
     max-width: 420px;
     margin: 0 auto;
+    padding: 2rem 0;
+  }
+
+  .hero-visual-inner {
+    height: 540px;
   }
 
   .hero-slide {
@@ -731,9 +737,14 @@
   }
 
   .hero-visual {
-    min-height: 400px;
+    min-height: 500px;
     max-width: 360px;
     margin: 0 auto;
+    padding: 2rem 0;
+  }
+
+  .hero-visual-inner {
+    height: 500px;
   }
 
   .arch-node-box {

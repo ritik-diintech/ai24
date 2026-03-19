@@ -1,0 +1,15 @@
+# Ai24 — ai24.digital
+# robots.txt — Welcome all search engine crawlers
+
+User-agent: *
+Allow: /
+
+# Block any admin or private paths if they exist
+# Disallow: /admin/
+# Disallow: /private/
+
+# Sitemap location
+Sitemap: https://www.ai24.digital/sitemap.xml
+
+# Allow crawl budget on key paths
+Crawl-delay: 1

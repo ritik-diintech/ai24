@@ -87,14 +87,14 @@ export const Navbar = () => {
         <div className="container header-container">
           {/* Main Logo — hidden on mobile when menu opens via CSS */}
           <Link to="/" className="logo header-logo" onClick={() => setMobileMenuOpen(false)}>
-            Ai<span>24</span>
+            <img src="/ai24_logo_dark-removebg-preview.png" alt="AI24 Logo" className="logo-img" />
           </Link>
 
           <nav className={`desktop-nav ${mobileMenuOpen ? 'open' : ''}`}>
             {/* Mobile panel header */}
             <div className="mobile-nav-header">
               <Link to="/" className="logo" onClick={() => setMobileMenuOpen(false)}>
-                Ai<span>24</span>
+                <img src="/ai24_logo_dark-removebg-preview.png" alt="AI24 Logo" className="logo-img" />
               </Link>
               <button className="mobile-close-btn" onClick={() => setMobileMenuOpen(false)} aria-label="Close menu">
                 <X size={22} />
