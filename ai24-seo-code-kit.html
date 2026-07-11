@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ai24 — SEO Code Kit</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue:  #1A56E8;
+    --red:   #E8401A;
+    --amber: #F0A800;
+    --green: #0DAF5E;
+    --black: #0A0A0F;
+    --surface: #F7F7F5;
+    --card: #FFFFFF;
+    --border: #E4E4E8;
+    --muted: #6B6B80;
+    --code-bg: #0D1117;
+    --code-border: #1E2530;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', sans-serif; background: var(--surface); color: var(--black); line-height: 1.6; }
+
+  /* Header */
+  .header {
+    background: var(--black); padding: 32px 64px;
+    display: flex; align-items: center; justify-content: space-between;
+    position: sticky; top: 0; z-index: 100;
+    border-bottom: 1px solid #1a1a24;
+  }
+  .h-logo { display: flex; align-items: center; gap: 12px; }
+  .h-dots { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; }
+  .h-dot { width: 9px; height: 9px; border-radius: 50%; }
+  .h-div { width: 1px; height: 24px; background: #2a2a3a; }
+  .h-name { font-size: 18px; font-weight: 800; color: #fff; letter-spacing: -0.02em; }
+  .h-title { font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.3); letter-spacing: 0.1em; text-transform: uppercase; }
+
+  /* Nav tabs */
+  .nav-tabs {
+    display: flex; gap: 4px;
+    background: #14141C; border: 1px solid #1E1E2A;
+    border-radius: 10px; padding: 4px;
+  }
+  .nav-tab {
+    padding: 8px 18px; border-radius: 7px;
+    font-size: 12px; font-weight: 600; letter-spacing: 0.06em;
+    cursor: pointer; color: rgba(255,255,255,0.4);
+    transition: all 0.2s;
+    text-decoration: none;
+  }
+  .nav-tab.active, .nav-tab:hover { background: #1E1E2A; color: rgba(255,255,255,0.9); }
+
+  /* Main layout */
+  .main { max-width: 960px; margin: 0 auto; padding: 56px 40px; }
+
+  /* Intro */
+  .intro-box {
+    background: linear-gradient(135deg, rgba(26,86,232,0.06), rgba(13,175,94,0.04));
+    border: 1px solid rgba(26,86,232,0.15);
+    border-radius: 16px; padding: 28px 32px;
+    display: flex; gap: 16px; align-items: flex-start;
+    margin-bottom: 48px;
+  }
+  .intro-icon { font-size: 24px; margin-top: 2px; }
+  .intro-title { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+  .intro-desc { font-size: 13px; color: var(--muted); line-height: 1.7; }
+
+  /* Code block */
+  .code-section { margin-bottom: 48px; }
+  .code-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 12px;
+  }
+  .code-meta { display: flex; align-items: center; gap: 12px; }
+  .code-num {
+    width: 28px; height: 28px; border-radius: 8px;
+    background: var(--black); color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 800;
+  }
+  .code-title { font-size: 17px; font-weight: 700; }
+  .code-badge {
+    font-size: 10px; font-weight: 700; letter-spacing: 0.1em;
+    text-transform: uppercase; padding: 3px 10px; border-radius: 100px;
+  }
+  .badge-critical { background: rgba(232,64,26,0.1); color: var(--red); }
+  .badge-important { background: rgba(240,168,0,0.1); color: var(--amber); }
+  .badge-recommended { background: rgba(26,86,232,0.1); color: var(--blue); }
+
+  .copy-btn {
+    display: flex; align-items: center; gap: 6px;
+    background: #1E2530; border: 1px solid #2A3340;
+    color: rgba(255,255,255,0.6); border-radius: 8px;
+    padding: 8px 16px; font-size: 12px; font-weight: 600;
+    cursor: pointer; transition: all 0.2s; font-family: 'Inter', sans-serif;
+  }
+  .copy-btn:hover { background: #2A3340; color: #fff; border-color: #3A4350; }
+  .copy-btn.copied { background: rgba(13,175,94,0.15); border-color: rgba(13,175,94,0.3); color: var(--green); }
+
+  .code-desc {
+    font-size: 13px; color: var(--muted); line-height: 1.7;
+    margin-bottom: 14px;
+  }
+
+  .code-block {
+    background: var(--code-bg);
+    border: 1px solid var(--code-border);
+    border-radius: 14px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .code-file-tab {
+    background: #161B22; border-bottom: 1px solid var(--code-border);
+    padding: 10px 20px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .file-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .file-name { font-size: 11px; color: rgba(255,255,255,0.35); font-family: 'Courier New', monospace; letter-spacing: 0.04em; }
+
+  pre {
+    padding: 24px 28px;
+    overflow-x: auto;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 13px;
+    line-height: 1.75;
+    color: #E6EDF3;
+    white-space: pre;
+  }
+
+  /* Syntax highlights */
+  .t  { color: #FF7B72; }  /* tag */
+  .a  { color: #79C0FF; }  /* attribute */
+  .v  { color: #A5D6FF; }  /* value string */
+  .c  { color: #8B949E; font-style: italic; }  /* comment */
+  .k  { color: #FF7B72; }  /* keyword / property */
+  .s  { color: #A5D6FF; }  /* string value */
+  .n  { color: #FFA657; }  /* number / special */
+  .p  { color: #E6EDF3; }  /* punctuation */
+  .cm { color: #8B949E; }  /* comma, colon */
+
+  /* Where to paste box */
+  .paste-guide {
+    background: #161B22; border: 1px solid var(--code-border);
+    border-radius: 10px; padding: 14px 20px;
+    margin-top: 10px;
+    display: flex; align-items: flex-start; gap: 10px;
+  }
+  .paste-icon { font-size: 14px; margin-top: 1px; }
+  .paste-text { font-size: 12px; color: rgba(255,255,255,0.45); line-height: 1.6; }
+  .paste-text strong { color: rgba(255,255,255,0.75); }
+
+  /* Divider */
+  .section-divider {
+    display: flex; align-items: center; gap: 16px;
+    margin: 48px 0 40px;
+  }
+  .sd-line { flex: 1; height: 1px; background: var(--border); }
+  .sd-label { font-size: 11px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted); }
+
+  /* Checklist */
+  .checklist {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 16px; padding: 32px;
+    margin-bottom: 48px;
+  }
+  .checklist-title { font-size: 16px; font-weight: 700; margin-bottom: 20px; }
+  .check-item {
+    display: flex; gap: 12px; align-items: flex-start;
+    padding: 10px 0; border-bottom: 1px solid var(--border);
+    font-size: 13px; color: #333; line-height: 1.5;
+  }
+  .check-item:last-child { border-bottom: none; }
+  .check-box {
+    width: 18px; height: 18px; border-radius: 4px;
+    border: 2px solid var(--border); flex-shrink: 0; margin-top: 1px;
+    cursor: pointer; transition: all 0.2s;
+  }
+  .check-box:hover { border-color: var(--green); }
+
+  /* Footer */
+  .footer { text-align: center; padding: 40px; color: var(--muted); font-size: 12px; }
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="header">
+  <div class="h-logo">
+    <div class="h-dots">
+      <div class="h-dot" style="background:#1A56E8;"></div>
+      <div class="h-dot" style="background:#E8401A;"></div>
+      <div class="h-dot" style="background:#F0A800;"></div>
+      <div class="h-dot" style="background:#0DAF5E;"></div>
+    </div>
+    <div class="h-div"></div>
+    <div class="h-name">Ai24</div>
+  </div>
+  <div class="h-title">SEO Code Kit — ai24.digital</div>
+  <div class="nav-tabs">
+    <a class="nav-tab active" href="#">Meta Tags</a>
+    <a class="nav-tab" href="#">OG Tags</a>
+    <a class="nav-tab" href="#">Schema</a>
+    <a class="nav-tab" href="#">Robots</a>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- Intro -->
+  <div class="intro-box">
+    <div class="intro-icon">⚡</div>
+    <div>
+      <div class="intro-title">Copy. Paste. Done.</div>
+      <div class="intro-desc">Everything below is production-ready code for ai24.digital. Replace any placeholder marked with <strong style="color:#F0A800;">⬛ YOUR_VALUE</strong> before pasting. Add all code inside the <code style="background:#1a1a2a;color:#79C0FF;padding:2px 6px;border-radius:4px;font-size:12px;">&lt;head&gt;</code> tag of your HTML — or in your framework's head configuration (Next.js = _document.js or next/head, React = react-helmet).</div>
+    </div>
+  </div>
+
+  <!-- ══ SECTION 1: ESSENTIAL META TAGS ══ -->
+  <div class="code-section">
+    <div class="code-header">
+      <div class="code-meta">
+        <div class="code-num">01</div>
+        <div class="code-title">Essential Meta Tags</div>
+        <span class="code-badge badge-critical">Critical — Add First</span>
+      </div>
+      <button class="copy-btn" onclick="copyCode('code1', this)">
+        <span>⎘</span> Copy
+      </button>
+    </div>
+    <div class="code-desc">These are the absolute minimum tags every page on ai24.digital must have. The charset, viewport, title, description, and canonical URL form the foundation of all SEO.</div>
+    <div class="code-block">
+      <div class="code-file-tab">
+        <div class="file-dot" style="background:#FF5F57;"></div>
+        <div class="file-dot" style="background:#FFBD2E;"></div>
+        <div class="file-dot" style="background:#28C840;"></div>
+        <div class="file-name">index.html — inside &lt;head&gt;</div>
+      </div>
+      <pre id="code1"><span class="c">&lt;!-- ═══════════════════════════════════════════ --&gt;
+&lt;!-- AI24 — ESSENTIAL META TAGS                 --&gt;
+&lt;!-- ═══════════════════════════════════════════ --&gt;</span>
+
+<span class="c">&lt;!-- Character encoding + viewport (MUST be first) --&gt;</span>
+<span class="t">&lt;meta</span> <span class="a">charset</span>=<span class="v">"UTF-8"</span> <span class="t">/&gt;</span>
+<span class="t">&lt;meta</span> <span class="a">name</span>=<span class="v">"viewport"</span> <span class="a">content</span>=<span class="v">"width=device-width, initial-scale=1.0"</span> <span class="t">/&gt;</span>
+
+<span class="c">&lt;!-- Page title — appears in Google results &amp; browser tab --&gt;</span>
+<span class="t">&lt;title&gt;</span>Ai24 — Enabling Intelligence | AI Solutions for Business<span class="t">&lt;/title&gt;</span>
+
+<span class="c">&lt;!-- Meta description — shown in Google results (150–160 chars) --&gt;</span>
+<span class="t">&lt;meta</span>
+  <span class="a">name</span>=<span class="v">"description"</span>
+  <span class="a">content</span>=<span class="v">"Ai24 enables businesses with AI-powered intelligence, speed, innovation and growth — available 24/7. Formerly Hysus Digital. AI solutions built for the intelligence era."</span>
+<span class="t">/&gt;</span>
+
+<span class="c">&lt;!-- Keywords (secondary signal, still useful) --&gt;</span>
+<span class="t">&lt;meta</span>
+  <span class="a">name</span>=<span class="v">"keywords"</span>
+  <span class="a">content</span>=<span class="v">"AI solutions India, artificial intelligence business, AI company India, Ai24, enabling intelligence, AI automation, business intelligence, Hysus Digital"</span>
+<span class="t">/&gt;</span>
+
+<span class="c">&lt;!-- Robots — allow full indexing --&gt;</span>
+<span class="t">&lt;meta</span> <span class="a">name</span>=<span class="v">"robots"</span> <span class="a">content</span>=<span class="v">"index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"</span> <span class="t">/&gt;</span>
+
+<span class="c">&lt;!-- Author --&gt;</span>
+<span class="t">&lt;meta</span> <span class="a">name</span>=<span class="v">"author"</span> <span class="a">content</span>=<span class="v">"Ai24 — Hysus Digital Private Limited"</span> <span class="t">/&gt;</span>
+
+<span class="c">&lt;!-- Canonical URL — prevents duplicate content issues --&gt;</span>
+<span class="t">&lt;link</span> <span class="a">rel</span>=<span class="v">"canonical"</span> <span class="a">href</span>=<span class="v">"https://www.ai24.digital/"</span> <span class="t">/&gt;</span>
+
+<span class="c">&lt;!-- Language --&gt;</span>
+<span class="t">&lt;meta</span> <span class="a">http-equiv</span>=<span class="v">"content-language"</span> <span class="a">content</span>=<span class="v">"en-IN"</span> <span class="t">/&gt;</span>
+
+<span class="c">&lt;!-- Theme colour (browser UI accent) --&gt;</span>
+<span class="t">&lt;meta</span> <span class="a">name</span>=<span class="v">"theme-color"</span> <span class="a">content</span>=<span class="v">"#1A56E8"</span> <span class="t">/&gt;</span></pre>
+    </div>
+    <div class="paste-guide">
+      <div class="paste-icon">📍</div>
+      <div class="paste-text"><strong>Where to paste:</strong> Inside the <code style="color:#79C0FF;">&lt;head&gt;</code> tag of every page. In Next.js, use the <code style="color:#79C0FF;">&lt;Head&gt;</code> component from <code style="color:#79C0FF;">next/head</code>. In React, use <code style="color:#79C0FF;">react-helmet</code>. Update the title and description per page — never use the same description on every page.</div>
+    </div>
+  </div>
+
+  <!-- ══ SECTION 2: FAVICON ══ -->
+  <div class="code-section">
+    <div class="code-header">
+      <div class="code-meta">
+        <div class="code-num">02</div>
+        <div class="code-title">Favicon & App Icons</div>
+        <span class="code-badge badge-important">Important</span>
+      </div>
+      <button class="copy-btn" onclick="copyCode('code2', this)">
+        <span>⎘</span> Copy
+      </button>
+    </div>
+    <div class="code-desc">Tells browsers and devices which icon to use. Use your approved Ai24 four-dot icon. Files should live in the <code style="background:#eee;padding:2px 6px;border-radius:4px;font-size:12px;">/public</code> folder.</div>
+    <div class="code-block">
+      <div class="code-file-tab">
+        <div class="file-dot" style="background:#FF5F57;"></div>
+        <div class="file-dot" style="background:#FFBD2E;"></div>
+        <div class="file-dot" style="background:#28C840;"></div>
+        <div class="file-name">index.html — inside &lt;head&gt;</div>
+      </div>
+      <pre id="code2"><span class="c">&lt;!-- ═══════════════════════════════════════════ --&gt;
+&lt;!-- AI24 — FAVICON &amp; APP ICONS                 --&gt;
+&lt;!-- ═══════════════════════════════════════════ --&gt;</span>
+
+<span class="c">&lt;!-- Standard favicon --&gt;</span>
+<span class="t">&lt;link</span> <span class="a">rel</span>=<span class="v">"icon"</span> <span class="a">type</span>=<span class="v">"image/png"</span> <span class="a">sizes</span>=<span class="v">"32x32"</span>   <span class="a">href</span>=<span class="v">"/favicon-32x32.png"</span>  <span class="t">/&gt;</span>
+<span class="t">&lt;link</span> <span class="a">rel</span>=<span class="v">"icon"</span> <span class="a">type</span>=<span class="v">"image/png"</span> <span class="a">sizes</span>=<span class="v">"16x16"</span>   <span class="a">href</span>=<span class="v">"/favicon-16x16.png"</span>  <span class="t">/&gt;</span>
+
+<span class="c">&lt;!-- Apple touch icon (iOS home screen) --&gt;</span>
+<span class="t">&lt;link</span> <span class="a">rel</span>=<span class="v">"apple-touch-icon"</span> <span class="a">sizes</span>=<span class="v">"180x180"</span> <span class="a">href</span>=<span class="v">"/apple-touch-icon.png"</span> <span class="t">/&gt;</span>
+
+<span class="c">&lt;!-- Android / PWA manifest --&gt;</span>
+<span class="t">&lt;link</span> <span class="a">rel</span>=<span class="v">"manifest"</span> <span class="a">href</span>=<span class="v">"/site.webmanifest"</span> <span class="t">/&gt;</span>
+
+<span class="c">&lt;!-- SVG favicon (modern browsers) --&gt;</span>
+<span class="t">&lt;link</span> <span class="a">rel</span>=<span class="v">"icon"</span> <span class="a">href</span>=<span class="v">"/favicon.svg"</span> <span class="a">type</span>=<span class="v">"image/svg+xml"</span> <span class="t">/&gt;</span></pre>
+    </div>
+    <div class="paste-guide">
+      <div class="paste-icon">🎨</div>
+      <div class="paste-text"><strong>Note:</strong> Export your Ai24 four-dot icon (the approved ai24_icon_800x800.png) at these sizes: 16×16, 32×32, 180×180. Use <strong>realfavicongenerator.net</strong> — upload your icon and it generates all sizes + the webmanifest automatically.</div>
+    </div>
+  </div>
+
+  <div class="section-divider">
+    <div class="sd-line"></div>
+    <div class="sd-label">Open Graph & Social Sharing</div>
+    <div class="sd-line"></div>
+  </div>
+
+  <!-- ══ SECTION 3: OG TAGS ══ -->
+  <div class="code-section">
+    <div class="code-header">
+      <div class="code-meta">
+        <div class="code-num">03</div>
+        <div class="code-title">Open Graph Tags (LinkedIn, Facebook, WhatsApp)</div>
+        <span class="code-badge badge-critical">Critical</span>
+      </div>
+      <button class="copy-btn" onclick="copyCode('code3', this)">
+        <span>⎘</span> Copy
+      </button>
+    </div>
+    <div class="code-desc">These control how ai24.digital looks when shared on LinkedIn, Facebook, and WhatsApp. The og:image is the most important — create a 1200×630px branded image and upload it to your /public folder.</div>
+    <div class="code-block">
+      <div class="code-file-tab">
+        <div class="file-dot" style="background:#FF5F57;"></div>
+        <div class="file-dot" style="background:#FFBD2E;"></div>
+        <div class="file-dot" style="background:#28C840;"></div>
+        <div class="file-name">index.html — inside &lt;head&gt;</div>
+      </div>
+      <pre id="code3"><span class="c">&lt;!-- ═══════════════════════════════════════════ --&gt;
+&lt;!-- AI24 — OPEN GRAPH TAGS                     --&gt;
+&lt;!-- Controls previews on LinkedIn, FB, WhatsApp --&gt;
+&lt;!-- ═══════════════════════════════════════════ --&gt;</span>
+
+<span class="c">&lt;!-- Basic OG --&gt;</span>
+<span class="t">&lt;meta</span> <span class="a">property</span>=<span class="v">"og:type"</span>        <span class="a">content</span>=<span class="v">"website"</span>                                           <span class="t">/&gt;</span>
+<span class="t">&lt;meta</span> <span class="a">property</span>=<span class="v">"og:url"</span>         <span class="a">content</span>=<span class="v">"https://www.ai24.digital/"</span>                          <span class="t">/&gt;</span>
+<span class="t">&lt;meta</span> <span class="a">property</span>=<span class="v">"og:site_name"</span>   <span class="a">content</span>=<span class="v">"Ai24"</span>                                              <span class="t">/&gt;</span>
+<span class="t">&lt;meta</span> <span class="a">property</span>=<span class="v">"og:locale"</span>      <span class="a">content</span>=<span class="v">"en_IN"</span>                                             <span class="t">/&gt;</span>
+
+<span class="c">&lt;!-- OG Title — can be slightly longer than your &lt;title&gt; tag --&gt;</span>
+<span class="t">&lt;meta</span>
+  <span class="a">property</span>=<span class="v">"og:title"</span>
+  <span class="a">content</span>=<span class="v">"Ai24 — Enabling Intelligence | AI Solutions for Business"</span>
+<span class="t">/&gt;</span>
+
+<span class="c">&lt;!-- OG Description — 2–4 sentences, compelling --&gt;</span>
+<span class="t">&lt;meta</span>
+  <span class="a">property</span>=<span class="v">"og:description"</span>
+  <span class="a">content</span>=<span class="v">"Ai24 is an AI intelligence company built for the new era of business. We enable organisations with four layers of intelligence: cognition, speed, innovation, and growth — available 24/7."</span>
+<span class="t">/&gt;</span>
+
+<span class="c">&lt;!-- OG Image — CRITICAL: 1200x630px, branded, high contrast --&gt;</span>
+<span class="c">&lt;!-- Create a branded image using your logo on dark background  --&gt;</span>
+<span class="t">&lt;meta</span> <span class="a">property</span>=<span class="v">"og:image"</span>       <span class="a">content</span>=<span class="v">"https://www.ai24.digital/og-image.png"</span>           <span class="t">/&gt;</span>
+<span class="t">&lt;meta</span> <span class="a">property</span>=<span class="v">"og:image:width"</span>  <span class="a">content</span>=<span class="v">"1200"</span>                                             <span class="t">/&gt;</span>
+<span class="t">&lt;meta</span> <span class="a">property</span>=<span class="v">"og:image:height"</span> <span class="a">content</span>=<span class="v">"630"</span>                                              <span class="t">/&gt;</span>
+<span class="t">&lt;meta</span> <span class="a">property</span>=<span class="v">"og:image:alt"</span>    <span class="a">content</span>=<span class="v">"Ai24 — Enabling Intelligence"</span>                    <span class="t">/&gt;</span>
+<span class="t">&lt;meta</span> <span class="a">property</span>=<span class="v">"og:image:type"</span>   <span class="a">content</span>=<span class="v">"image/png"</span>                                        <span class="t">/&gt;</span></pre>
+    </div>
+  </div>
+
+  <!-- ══ SECTION 4: TWITTER CARD ══ -->
+  <div class="code-section">
+    <div class="code-header">
+      <div class="code-meta">
+        <div class="code-num">04</div>
+        <div class="code-title">Twitter / X Card Tags</div>
+        <span class="code-badge badge-important">Important</span>
+      </div>
+      <button class="copy-btn" onclick="copyCode('code4', this)">
+        <span>⎘</span> Copy
+      </button>
+    </div>
+    <div class="code-desc">Controls how your link looks when shared on Twitter/X. Use <code style="background:#eee;padding:2px 6px;border-radius:4px;font-size:12px;">summary_large_image</code> — it shows a big card which gets significantly more clicks than the small card format.</div>
+    <div class="code-block">
+      <div class="code-file-tab">
+        <div class="file-dot" style="background:#FF5F57;"></div>
+        <div class="file-dot" style="background:#FFBD2E;"></div>
+        <div class="file-dot" style="background:#28C840;"></div>
+        <div class="file-name">index.html — inside &lt;head&gt;</div>
+      </div>
+      <pre id="code4"><span class="c">&lt;!-- ═══════════════════════════════════════════ --&gt;
+&lt;!-- AI24 — TWITTER / X CARD TAGS               --&gt;
+&lt;!-- ═══════════════════════════════════════════ --&gt;</span>
+
+<span class="t">&lt;meta</span> <span class="a">name</span>=<span class="v">"twitter:card"</span>        <span class="a">content</span>=<span class="v">"summary_large_image"</span>                           <span class="t">/&gt;</span>
+<span class="t">&lt;meta</span> <span class="a">name</span>=<span class="v">"twitter:site"</span>        <span class="a">content</span>=<span class="v">"@ai24digital"</span>                                   <span class="t">/&gt;</span>
+<span class="t">&lt;meta</span> <span class="a">name</span>=<span class="v">"twitter:creator"</span>     <span class="a">content</span>=<span class="v">"@ai24digital"</span>                                   <span class="t">/&gt;</span>
+<span class="t">&lt;meta</span>
+  <span class="a">name</span>=<span class="v">"twitter:title"</span>
+  <span class="a">content</span>=<span class="v">"Ai24 — Enabling Intelligence"</span>
+<span class="t">/&gt;</span>
+<span class="t">&lt;meta</span>
+  <span class="a">name</span>=<span class="v">"twitter:description"</span>
+  <span class="a">content</span>=<span class="v">"AI intelligence platform built for business. Four layers: Intelligence · Speed · Innovation · Growth. Available 24/7."</span>
+<span class="t">/&gt;</span>
+<span class="t">&lt;meta</span> <span class="a">name</span>=<span class="v">"twitter:image"</span>       <span class="a">content</span>=<span class="v">"https://www.ai24.digital/og-image.png"</span>           <span class="t">/&gt;</span>
+<span class="t">&lt;meta</span> <span class="a">name</span>=<span class="v">"twitter:image:alt"</span>   <span class="a">content</span>=<span class="v">"Ai24 — Enabling Intelligence"</span>                    <span class="t">/&gt;</span></pre>
+    </div>
+  </div>
+
+  <div class="section-divider">
+    <div class="sd-line"></div>
+    <div class="sd-label">Schema.org Structured Data</div>
+    <div class="sd-line"></div>
+  </div>
+
+  <!-- ══ SECTION 5: SCHEMA ══ -->
+  <div class="code-section">
+    <div class="code-header">
+      <div class="code-meta">
+        <div class="code-num">05</div>
+        <div class="code-title">Schema.org — Organisation</div>
+        <span class="code-badge badge-critical">Critical for Knowledge Panel</span>
+      </div>
+      <button class="copy-btn" onclick="copyCode('code5', this)">
+        <span>⎘</span> Copy
+      </button>
+    </div>
+    <div class="code-desc">This JSON-LD tells Google exactly who Ai24 is — your name, logo, social links, founding info, and what you do. This is the single most important step toward getting a Google Knowledge Panel for your brand.</div>
+    <div class="code-block">
+      <div class="code-file-tab">
+        <div class="file-dot" style="background:#FF5F57;"></div>
+        <div class="file-dot" style="background:#FFBD2E;"></div>
+        <div class="file-dot" style="background:#28C840;"></div>
+        <div class="file-name">index.html — inside &lt;head&gt; or end of &lt;body&gt;</div>
+      </div>
+      <pre id="code5"><span class="t">&lt;script</span> <span class="a">type</span>=<span class="v">"application/ld+json"</span><span class="t">&gt;</span>
+<span class="p">{</span>
+  <span class="k">"@context"</span><span class="cm">:</span> <span class="s">"https://schema.org"</span><span class="cm">,</span>
+  <span class="k">"@type"</span><span class="cm">:</span> <span class="s">"Organization"</span><span class="cm">,</span>
+
+  <span class="c">// ── Core Identity ──────────────────────────</span>
+  <span class="k">"name"</span><span class="cm">:</span> <span class="s">"Ai24"</span><span class="cm">,</span>
+  <span class="k">"legalName"</span><span class="cm">:</span> <span class="s">"Hysus Digital Private Limited"</span><span class="cm">,</span>
+  <span class="k">"alternateName"</span><span class="cm">:</span> <span class="s">"Ai24 — Enabling Intelligence"</span><span class="cm">,</span>
+  <span class="k">"description"</span><span class="cm">:</span> <span class="s">"Ai24 is an AI intelligence company that enables businesses with four layers of capability: Intelligence, Speed, Innovation, and Growth — available 24/7. Formerly Hysus Digital Private Limited."</span><span class="cm">,</span>
+  <span class="k">"slogan"</span><span class="cm">:</span> <span class="s">"Enabling Intelligence"</span><span class="cm">,</span>
+
+  <span class="c">// ── Web Presence ───────────────────────────</span>
+  <span class="k">"url"</span><span class="cm">:</span> <span class="s">"https://www.ai24.digital"</span><span class="cm">,</span>
+  <span class="k">"logo"</span><span class="cm">:</span> <span class="p">{</span>
+    <span class="k">"@type"</span><span class="cm">:</span> <span class="s">"ImageObject"</span><span class="cm">,</span>
+    <span class="k">"url"</span><span class="cm">:</span> <span class="s">"https://www.ai24.digital/logo.png"</span><span class="cm">,</span>
+    <span class="k">"width"</span><span class="cm">:</span> <span class="n">1200</span><span class="cm">,</span>
+    <span class="k">"height"</span><span class="cm">:</span> <span class="n">384</span>
+  <span class="p">}</span><span class="cm">,</span>
+  <span class="k">"image"</span><span class="cm">:</span> <span class="s">"https://www.ai24.digital/og-image.png"</span><span class="cm">,</span>
+
+  <span class="c">// ── Location ───────────────────────────────</span>
+  <span class="k">"address"</span><span class="cm">:</span> <span class="p">{</span>
+    <span class="k">"@type"</span><span class="cm">:</span> <span class="s">"PostalAddress"</span><span class="cm">,</span>
+    <span class="k">"addressCountry"</span><span class="cm">:</span> <span class="s">"IN"</span>
+  <span class="p">}</span><span class="cm">,</span>
+
+  <span class="c">// ── Contact ────────────────────────────────</span>
+  <span class="k">"contactPoint"</span><span class="cm">:</span> <span class="p">{</span>
+    <span class="k">"@type"</span><span class="cm">:</span> <span class="s">"ContactPoint"</span><span class="cm">,</span>
+    <span class="k">"contactType"</span><span class="cm">:</span> <span class="s">"customer service"</span><span class="cm">,</span>
+    <span class="k">"email"</span><span class="cm">:</span> <span class="s">"hello@ai24.digital"</span><span class="cm">,</span>    <span class="c">// ⬛ Update this</span>
+    <span class="k">"availableLanguage"</span><span class="cm">:</span> <span class="p">[</span><span class="s">"English"</span><span class="cm">,</span> <span class="s">"Hindi"</span><span class="p">]</span>
+  <span class="p">}</span><span class="cm">,</span>
+
+  <span class="c">// ── Social Profiles (Google uses these for Knowledge Panel) ──</span>
+  <span class="k">"sameAs"</span><span class="cm">:</span> <span class="p">[</span>
+    <span class="s">"https://www.linkedin.com/company/ai24digital"</span><span class="cm">,</span>   <span class="c">// ⬛ Update slug</span>
+    <span class="s">"https://www.instagram.com/ai24digital"</span><span class="cm">,</span>           <span class="c">// ⬛ Update handle</span>
+    <span class="s">"https://twitter.com/ai24digital"</span><span class="cm">,</span>                 <span class="c">// ⬛ Update handle</span>
+    <span class="s">"https://www.youtube.com/@ai24digital"</span><span class="cm">,</span>            <span class="c">// ⬛ Add if exists</span>
+    <span class="s">"https://www.facebook.com/ai24digital"</span>              <span class="c">// ⬛ Add if exists</span>
+  <span class="p">]</span><span class="cm">,</span>
+
+  <span class="c">// ── What Ai24 Does ─────────────────────────</span>
+  <span class="k">"knowsAbout"</span><span class="cm">:</span> <span class="p">[</span>
+    <span class="s">"Artificial Intelligence"</span><span class="cm">,</span>
+    <span class="s">"Machine Learning"</span><span class="cm">,</span>
+    <span class="s">"Business Intelligence"</span><span class="cm">,</span>
+    <span class="s">"AI Automation"</span><span class="cm">,</span>
+    <span class="s">"Natural Language Processing"</span>
+  <span class="p">]</span><span class="cm">,</span>
+
+  <span class="c">// ── Founding Info ──────────────────────────</span>
+  <span class="k">"foundingLocation"</span><span class="cm">:</span> <span class="p">{</span>
+    <span class="k">"@type"</span><span class="cm">:</span> <span class="s">"Place"</span><span class="cm">,</span>
+    <span class="k">"name"</span><span class="cm">:</span> <span class="s">"India"</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+<span class="t">&lt;/script&gt;</span></pre>
+    </div>
+    <div class="paste-guide">
+      <div class="paste-icon">⚠️</div>
+      <div class="paste-text"><strong>Important:</strong> Update every line marked with <strong style="color:#F0A800;">⬛</strong> before adding to your site. Wrong social URLs will confuse Google. Test your structured data at <strong>search.google.com/test/rich-results</strong> after adding.</div>
+    </div>
+  </div>
+
+  <!-- ══ SECTION 6: WEBSITE SCHEMA ══ -->
+  <div class="code-section">
+    <div class="code-header">
+      <div class="code-meta">
+        <div class="code-num">06</div>
+        <div class="code-title">Schema.org — WebSite (Enables Google Sitelinks Search)</div>
+        <span class="code-badge badge-recommended">Recommended</span>
+      </div>
+      <button class="copy-btn" onclick="copyCode('code6', this)">
+        <span>⎘</span> Copy
+      </button>
+    </div>
+    <div class="code-desc">This enables Google's Sitelinks Searchbox — where users can search your site directly from Google results. Also helps Google understand your website as a distinct entity.</div>
+    <div class="code-block">
+      <div class="code-file-tab">
+        <div class="file-dot" style="background:#FF5F57;"></div>
+        <div class="file-dot" style="background:#FFBD2E;"></div>
+        <div class="file-dot" style="background:#28C840;"></div>
+        <div class="file-name">index.html — inside &lt;head&gt; or end of &lt;body&gt;</div>
+      </div>
+      <pre id="code6"><span class="t">&lt;script</span> <span class="a">type</span>=<span class="v">"application/ld+json"</span><span class="t">&gt;</span>
+<span class="p">{</span>
+  <span class="k">"@context"</span><span class="cm">:</span> <span class="s">"https://schema.org"</span><span class="cm">,</span>
+  <span class="k">"@type"</span><span class="cm">:</span> <span class="s">"WebSite"</span><span class="cm">,</span>
+  <span class="k">"name"</span><span class="cm">:</span> <span class="s">"Ai24"</span><span class="cm">,</span>
+  <span class="k">"url"</span><span class="cm">:</span> <span class="s">"https://www.ai24.digital"</span><span class="cm">,</span>
+  <span class="k">"description"</span><span class="cm">:</span> <span class="s">"AI intelligence solutions for businesses — Enabling Intelligence."</span><span class="cm">,</span>
+  <span class="k">"inLanguage"</span><span class="cm">:</span> <span class="s">"en-IN"</span><span class="cm">,</span>
+  <span class="k">"potentialAction"</span><span class="cm">:</span> <span class="p">{</span>
+    <span class="k">"@type"</span><span class="cm">:</span> <span class="s">"SearchAction"</span><span class="cm">,</span>
+    <span class="k">"target"</span><span class="cm">:</span> <span class="p">{</span>
+      <span class="k">"@type"</span><span class="cm">:</span> <span class="s">"EntryPoint"</span><span class="cm">,</span>
+      <span class="k">"urlTemplate"</span><span class="cm">:</span> <span class="s">"https://www.ai24.digital/search?q={search_term_string}"</span>
+    <span class="p">}</span><span class="cm">,</span>
+    <span class="k">"query-input"</span><span class="cm">:</span> <span class="s">"required name=search_term_string"</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+<span class="t">&lt;/script&gt;</span></pre>
+    </div>
+  </div>
+
+  <div class="section-divider">
+    <div class="sd-line"></div>
+    <div class="sd-label">Robots & Sitemap Files</div>
+    <div class="sd-line"></div>
+  </div>
+
+  <!-- ══ SECTION 7: ROBOTS.TXT ══ -->
+  <div class="code-section">
+    <div class="code-header">
+      <div class="code-meta">
+        <div class="code-num">07</div>
+        <div class="code-title">robots.txt</div>
+        <span class="code-badge badge-critical">Critical — Missing from Site</span>
+      </div>
+      <button class="copy-btn" onclick="copyCode('code7', this)">
+        <span>⎘</span> Copy
+      </button>
+    </div>
+    <div class="code-desc">This file tells all search engine crawlers they are welcome on ai24.digital. It must be accessible at <strong>ai24.digital/robots.txt</strong>. Currently this file does not exist on your site.</div>
+    <div class="code-block">
+      <div class="code-file-tab">
+        <div class="file-dot" style="background:#FF5F57;"></div>
+        <div class="file-dot" style="background:#FFBD2E;"></div>
+        <div class="file-dot" style="background:#28C840;"></div>
+        <div class="file-name">/public/robots.txt</div>
+      </div>
+      <pre id="code7"><span class="c"># Ai24 — ai24.digital
+# robots.txt — Welcome all search engine crawlers</span>
+
+<span class="k">User-agent</span><span class="cm">:</span> *
+<span class="k">Allow</span><span class="cm">:</span> /
+
+<span class="c"># Block any admin or private paths if they exist</span>
+<span class="c"># Disallow: /admin/</span>
+<span class="c"># Disallow: /private/</span>
+
+<span class="c"># Sitemap location</span>
+<span class="k">Sitemap</span><span class="cm">:</span> https://www.ai24.digital/sitemap.xml
+
+<span class="c"># Allow crawl budget on key paths</span>
+<span class="k">Crawl-delay</span><span class="cm">:</span> 1</pre>
+    </div>
+    <div class="paste-guide">
+      <div class="paste-icon">📍</div>
+      <div class="paste-text"><strong>Where to place it:</strong> Save as <code style="color:#79C0FF;">robots.txt</code> in your <code style="color:#79C0FF;">/public</code> folder. It must be reachable at <code style="color:#79C0FF;">https://www.ai24.digital/robots.txt</code> — verify this in your browser after deploying.</div>
+    </div>
+  </div>
+
+  <!-- ══ SECTION 8: SITEMAP ══ -->
+  <div class="code-section">
+    <div class="code-header">
+      <div class="code-meta">
+        <div class="code-num">08</div>
+        <div class="code-title">sitemap.xml</div>
+        <span class="code-badge badge-critical">Critical — Missing from Site</span>
+      </div>
+      <button class="copy-btn" onclick="copyCode('code8', this)">
+        <span>⎘</span> Copy
+      </button>
+    </div>
+    <div class="code-desc">A sitemap is the map of all your pages — without it Google doesn't know what to crawl. Update the <code style="background:#eee;padding:2px 6px;border-radius:4px;font-size:12px;">&lt;loc&gt;</code> entries to match your actual pages. Add new entries every time you add a page.</div>
+    <div class="code-block">
+      <div class="code-file-tab">
+        <div class="file-dot" style="background:#FF5F57;"></div>
+        <div class="file-dot" style="background:#FFBD2E;"></div>
+        <div class="file-dot" style="background:#28C840;"></div>
+        <div class="file-name">/public/sitemap.xml</div>
+      </div>
+      <pre id="code8"><span class="t">&lt;?xml</span> <span class="a">version</span>=<span class="v">"1.0"</span> <span class="a">encoding</span>=<span class="v">"UTF-8"</span><span class="t">?&gt;</span>
+<span class="t">&lt;urlset</span> <span class="a">xmlns</span>=<span class="v">"http://www.sitemaps.org/schemas/sitemap/0.9"</span>
+        <span class="a">xmlns:xsi</span>=<span class="v">"http://www.w3.org/2001/XMLSchema-instance"</span>
+        <span class="a">xsi:schemaLocation</span>=<span class="v">"http://www.sitemaps.org/schemas/sitemap/0.9
+                            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd"</span><span class="t">&gt;</span>
+
+  <span class="c">&lt;!-- Homepage --&gt;</span>
+  <span class="t">&lt;url&gt;</span>
+    <span class="t">&lt;loc&gt;</span>https://www.ai24.digital/<span class="t">&lt;/loc&gt;</span>
+    <span class="t">&lt;lastmod&gt;</span>2025-03-01<span class="t">&lt;/lastmod&gt;</span>
+    <span class="t">&lt;changefreq&gt;</span>weekly<span class="t">&lt;/changefreq&gt;</span>
+    <span class="t">&lt;priority&gt;</span>1.0<span class="t">&lt;/priority&gt;</span>
+  <span class="t">&lt;/url&gt;</span>
+
+  <span class="c">&lt;!-- About page --&gt;</span>
+  <span class="t">&lt;url&gt;</span>
+    <span class="t">&lt;loc&gt;</span>https://www.ai24.digital/about<span class="t">&lt;/loc&gt;</span>
+    <span class="t">&lt;lastmod&gt;</span>2025-03-01<span class="t">&lt;/lastmod&gt;</span>
+    <span class="t">&lt;changefreq&gt;</span>monthly<span class="t">&lt;/changefreq&gt;</span>
+    <span class="t">&lt;priority&gt;</span>0.8<span class="t">&lt;/priority&gt;</span>
+  <span class="t">&lt;/url&gt;</span>
+
+  <span class="c">&lt;!-- Services page --&gt;</span>
+  <span class="t">&lt;url&gt;</span>
+    <span class="t">&lt;loc&gt;</span>https://www.ai24.digital/services<span class="t">&lt;/loc&gt;</span>
+    <span class="t">&lt;lastmod&gt;</span>2025-03-01<span class="t">&lt;/lastmod&gt;</span>
+    <span class="t">&lt;changefreq&gt;</span>monthly<span class="t">&lt;/changefreq&gt;</span>
+    <span class="t">&lt;priority&gt;</span>0.9<span class="t">&lt;/priority&gt;</span>
+  <span class="t">&lt;/url&gt;</span>
+
+  <span class="c">&lt;!-- Contact page --&gt;</span>
+  <span class="t">&lt;url&gt;</span>
+    <span class="t">&lt;loc&gt;</span>https://www.ai24.digital/contact<span class="t">&lt;/loc&gt;</span>
+    <span class="t">&lt;lastmod&gt;</span>2025-03-01<span class="t">&lt;/lastmod&gt;</span>
+    <span class="t">&lt;changefreq&gt;</span>monthly<span class="t">&lt;/changefreq&gt;</span>
+    <span class="t">&lt;priority&gt;</span>0.7<span class="t">&lt;/priority&gt;</span>
+  <span class="t">&lt;/url&gt;</span>
+
+  <span class="c">&lt;!-- ⬛ Add one &lt;url&gt; block per page on your site --&gt;</span>
+
+<span class="t">&lt;/urlset&gt;</span></pre>
+    </div>
+    <div class="paste-guide">
+      <div class="paste-icon">📍</div>
+      <div class="paste-text"><strong>After adding the sitemap:</strong> Go to <strong>Google Search Console → Sitemaps → Add sitemap</strong> and submit <code style="color:#79C0FF;">https://www.ai24.digital/sitemap.xml</code>. Google will begin crawling your site within 24–72 hours. If using Next.js, use the built-in <code style="color:#79C0FF;">next-sitemap</code> package instead for automatic generation.</div>
+    </div>
+  </div>
+
+  <!-- Checklist -->
+  <div class="checklist">
+    <div class="checklist-title">✅ Implementation Checklist</div>
+    <div class="check-item"><div class="check-box" onclick="this.style.background=this.style.background?'':'#0DAF5E';this.style.borderColor=this.style.borderColor=='rgb(13, 175, 94)'?'#E4E4E8':'#0DAF5E';"></div>Add all meta tags (Section 01) to &lt;head&gt;</div>
+    <div class="check-item"><div class="check-box" onclick="this.style.background=this.style.background?'':'#0DAF5E';this.style.borderColor=this.style.borderColor=='rgb(13, 175, 94)'?'#E4E4E8':'#0DAF5E';"></div>Export Ai24 icon → generate favicons at realfavicongenerator.net (Section 02)</div>
+    <div class="check-item"><div class="check-box" onclick="this.style.background=this.style.background?'':'#0DAF5E';this.style.borderColor=this.style.borderColor=='rgb(13, 175, 94)'?'#E4E4E8':'#0DAF5E';"></div>Create a 1200×630px og-image.png and upload to /public</div>
+    <div class="check-item"><div class="check-box" onclick="this.style.background=this.style.background?'':'#0DAF5E';this.style.borderColor=this.style.borderColor=='rgb(13, 175, 94)'?'#E4E4E8':'#0DAF5E';"></div>Add OG tags (Section 03) with og-image URL</div>
+    <div class="check-item"><div class="check-box" onclick="this.style.background=this.style.background?'':'#0DAF5E';this.style.borderColor=this.style.borderColor=='rgb(13, 175, 94)'?'#E4E4E8':'#0DAF5E';"></div>Add Twitter Card tags (Section 04)</div>
+    <div class="check-item"><div class="check-box" onclick="this.style.background=this.style.background?'':'#0DAF5E';this.style.borderColor=this.style.borderColor=='rgb(13, 175, 94)'?'#E4E4E8':'#0DAF5E';"></div>Add Organisation Schema (Section 05) — update all ⬛ values</div>
+    <div class="check-item"><div class="check-box" onclick="this.style.background=this.style.background?'':'#0DAF5E';this.style.borderColor=this.style.borderColor=='rgb(13, 175, 94)'?'#E4E4E8':'#0DAF5E';"></div>Add WebSite Schema (Section 06)</div>
+    <div class="check-item"><div class="check-box" onclick="this.style.background=this.style.background?'':'#0DAF5E';this.style.borderColor=this.style.borderColor=='rgb(13, 175, 94)'?'#E4E4E8':'#0DAF5E';"></div>Create robots.txt and verify at ai24.digital/robots.txt</div>
+    <div class="check-item"><div class="check-box" onclick="this.style.background=this.style.background?'':'#0DAF5E';this.style.borderColor=this.style.borderColor=='rgb(13, 175, 94)'?'#E4E4E8':'#0DAF5E';"></div>Create sitemap.xml and verify at ai24.digital/sitemap.xml</div>
+    <div class="check-item"><div class="check-box" onclick="this.style.background=this.style.background?'':'#0DAF5E';this.style.borderColor=this.style.borderColor=='rgb(13, 175, 94)'?'#E4E4E8':'#0DAF5E';"></div>Sign in to Google Search Console and submit sitemap</div>
+    <div class="check-item"><div class="check-box" onclick="this.style.background=this.style.background?'':'#0DAF5E';this.style.borderColor=this.style.borderColor=='rgb(13, 175, 94)'?'#E4E4E8':'#0DAF5E';"></div>Test structured data at search.google.com/test/rich-results</div>
+    <div class="check-item"><div class="check-box" onclick="this.style.background=this.style.background?'':'#0DAF5E';this.style.borderColor=this.style.borderColor=='rgb(13, 175, 94)'?'#E4E4E8':'#0DAF5E';"></div>Test OG tags at developers.facebook.com/tools/debug + cards-dev.twitter.com</div>
+  </div>
+
+</div>
+
+<div class="footer">Ai24 SEO Code Kit · ai24.digital · Confidential — Hysus Digital Private Limited</div>
+
+<script>
+function copyCode(id, btn) {
+  const pre = document.getElementById(id);
+  const text = pre.innerText;
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = '✓ Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.innerHTML = '<span>⎘</span> Copy';
+      btn.classList.remove('copied');
+    }, 2000);
+  });
+}
+</script>
+
+</body>
+</html>

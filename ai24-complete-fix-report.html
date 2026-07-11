@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ai24 — Complete Fix-It Report</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue:   #1A56E8;
+    --red:    #E8401A;
+    --amber:  #F0A800;
+    --green:  #0DAF5E;
+    --black:  #0A0A0F;
+    --ink:    #1A1A2E;
+    --surface:#F4F4F0;
+    --card:   #FFFFFF;
+    --border: #E2E2E8;
+    --muted:  #6B6B82;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'Inter',sans-serif;background:var(--surface);color:var(--ink);line-height:1.6;}
+
+  /* ── HEADER ── */
+  .header{
+    background:var(--black);padding:28px 60px;
+    display:flex;align-items:center;justify-content:space-between;
+    border-bottom:1px solid #1a1a26;
+  }
+  .h-logo{display:flex;align-items:center;gap:12px;}
+  .h-dots{display:grid;grid-template-columns:1fr 1fr;gap:4px;}
+  .h-dot{width:9px;height:9px;border-radius:50%;}
+  .h-sep{width:1px;height:22px;background:#2a2a3a;}
+  .h-name{font-size:17px;font-weight:800;color:#fff;letter-spacing:-0.02em;}
+  .h-right{display:flex;align-items:center;gap:24px;}
+  .h-label{font-size:11px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.28);}
+
+  /* ── SCORE HEADER ── */
+  .score-header{
+    background:linear-gradient(135deg,#0D1020,#0a0a14);
+    padding:52px 60px;border-bottom:1px solid #1a1a2a;
+  }
+  .sh-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:44px;}
+  .sh-title{font-size:32px;font-weight:800;color:#fff;letter-spacing:-0.02em;margin-bottom:6px;}
+  .sh-sub{font-size:14px;color:rgba(255,255,255,0.35);letter-spacing:0.04em;}
+  .sh-date{font-size:12px;color:rgba(255,255,255,0.2);letter-spacing:0.08em;margin-top:4px;}
+  .sh-totals{display:flex;gap:32px;}
+  .sh-total{
+    text-align:center;
+    background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);
+    border-radius:14px;padding:20px 28px;
+  }
+  .sh-total-num{font-size:40px;font-weight:800;line-height:1;letter-spacing:-0.03em;}
+  .sh-total-lbl{font-size:10px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-top:4px;}
+
+  /* Category pill nav */
+  .cat-nav{display:flex;gap:8px;flex-wrap:wrap;}
+  .cat-pill{
+    display:flex;align-items:center;gap:8px;
+    padding:10px 20px;border-radius:100px;
+    border:1px solid rgba(255,255,255,0.1);
+    cursor:pointer;transition:all 0.2s;text-decoration:none;
+  }
+  .cat-pill:hover{background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.2);}
+  .cat-pill-dot{width:8px;height:8px;border-radius:50%;}
+  .cat-pill-text{font-size:12px;font-weight:600;color:rgba(255,255,255,0.55);letter-spacing:0.04em;}
+  .cat-pill-count{font-size:11px;font-weight:700;color:rgba(255,255,255,0.28);}
+
+  /* ── MAIN ── */
+  .main{max-width:1040px;margin:0 auto;padding:56px 40px;}
+
+  /* ── CATEGORY BLOCK ── */
+  .cat-block{margin-bottom:60px;}
+  .cat-header{
+    display:flex;align-items:center;gap:0;
+    margin-bottom:24px;
+    padding-bottom:20px;
+    border-bottom:2px solid var(--border);
+    position:relative;
+  }
+  .cat-header::after{
+    content:'';position:absolute;bottom:-2px;left:0;
+    height:2px;width:60px;
+  }
+  .cat-block:nth-child(1) .cat-header::after{background:var(--red);}
+  .cat-block:nth-child(2) .cat-header::after{background:var(--red);}
+  .cat-block:nth-child(3) .cat-header::after{background:var(--amber);}
+  .cat-block:nth-child(4) .cat-header::after{background:var(--amber);}
+  .cat-block:nth-child(5) .cat-header::after{background:var(--blue);}
+  .cat-block:nth-child(6) .cat-header::after{background:var(--green);}
+
+  .cat-icon{font-size:22px;margin-right:14px;}
+  .cat-title{font-size:20px;font-weight:800;flex:1;}
+  .cat-score-wrap{display:flex;align-items:center;gap:12px;}
+  .cat-score{
+    font-size:13px;font-weight:700;
+    padding:5px 16px;border-radius:100px;
+  }
+  .score-red   {background:rgba(232,64,26,0.1);color:var(--red);}
+  .score-amber {background:rgba(240,168,0,0.1);color:var(--amber);}
+  .score-blue  {background:rgba(26,86,232,0.1);color:var(--blue);}
+  .score-green {background:rgba(13,175,94,0.1);color:var(--green);}
+
+  /* ── FINDING CARD ── */
+  .finding{
+    background:var(--card);border:1px solid var(--border);
+    border-radius:14px;padding:0;
+    margin-bottom:10px;overflow:hidden;
+    display:grid;grid-template-columns:5px 1fr;
+  }
+  .f-stripe{width:5px;}
+  .f-stripe.critical{background:var(--red);}
+  .f-stripe.warning {background:var(--amber);}
+  .f-stripe.info    {background:var(--blue);}
+  .f-stripe.good    {background:var(--green);}
+
+  .f-body{padding:20px 22px 20px 20px;display:grid;grid-template-columns:1fr auto;gap:16px;align-items:start;}
+  .f-main{}
+  .f-top{display:flex;align-items:center;gap:10px;margin-bottom:6px;}
+  .f-icon{font-size:16px;}
+  .f-title{font-size:14px;font-weight:700;}
+  .f-desc{font-size:13px;color:var(--muted);line-height:1.7;margin-bottom:10px;}
+  .f-fix{
+    display:inline-flex;align-items:center;gap:6px;
+    font-size:12px;font-weight:600;color:var(--blue);
+    background:rgba(26,86,232,0.05);border:1px solid rgba(26,86,232,0.12);
+    border-radius:8px;padding:7px 12px;line-height:1.4;
+  }
+  .f-tag{
+    font-size:10px;font-weight:700;letter-spacing:0.1em;
+    text-transform:uppercase;padding:4px 10px;
+    border-radius:100px;white-space:nowrap;align-self:flex-start;margin-top:2px;
+  }
+  .tag-c{background:rgba(232,64,26,0.08);color:var(--red);}
+  .tag-w{background:rgba(240,168,0,0.08);color:var(--amber);}
+  .tag-i{background:rgba(26,86,232,0.08);color:var(--blue);}
+  .tag-g{background:rgba(13,175,94,0.08);color:var(--green);}
+
+  /* ── HIGHLIGHT BANNER ── */
+  .highlight{
+    border-radius:14px;padding:24px 28px;
+    margin-bottom:10px;display:flex;gap:14px;align-items:flex-start;
+  }
+  .hl-red   {background:rgba(232,64,26,0.06);border:1px solid rgba(232,64,26,0.2);}
+  .hl-amber {background:rgba(240,168,0,0.06);border:1px solid rgba(240,168,0,0.2);}
+  .hl-blue  {background:rgba(26,86,232,0.06);border:1px solid rgba(26,86,232,0.2);}
+  .hl-green {background:rgba(13,175,94,0.06);border:1px solid rgba(13,175,94,0.2);}
+  .hl-icon{font-size:22px;margin-top:1px;flex-shrink:0;}
+  .hl-title{font-size:14px;font-weight:700;margin-bottom:4px;}
+  .hl-body{font-size:13px;color:var(--muted);line-height:1.7;}
+  .hl-body strong{color:var(--ink);}
+
+  /* ── ROADMAP ── */
+  .roadmap{
+    background:var(--black);border-radius:20px;
+    padding:44px 48px;margin-top:56px;
+  }
+  .rm-title{font-size:20px;font-weight:800;color:#fff;margin-bottom:32px;}
+  .rm-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;}
+  .rm-col{
+    border-radius:14px;padding:24px;
+  }
+  .rm-col-1{background:rgba(232,64,26,0.08);border:1px solid rgba(232,64,26,0.2);}
+  .rm-col-2{background:rgba(240,168,0,0.08);border:1px solid rgba(240,168,0,0.2);}
+  .rm-col-3{background:rgba(13,175,94,0.08);border:1px solid rgba(13,175,94,0.2);}
+  .rm-week{font-size:10px;font-weight:800;letter-spacing:0.16em;text-transform:uppercase;margin-bottom:16px;}
+  .rm-col-1 .rm-week{color:var(--red);}
+  .rm-col-2 .rm-week{color:var(--amber);}
+  .rm-col-3 .rm-week{color:var(--green);}
+  .rm-item{
+    font-size:12px;color:rgba(255,255,255,0.6);
+    line-height:1.5;padding:9px 0;
+    border-bottom:1px solid rgba(255,255,255,0.05);
+    display:flex;gap:8px;align-items:flex-start;
+  }
+  .rm-item:last-child{border-bottom:none;padding-bottom:0;}
+  .rm-item::before{content:'→';opacity:0.3;flex-shrink:0;}
+
+  /* ── FOOTER ── */
+  .footer{text-align:center;padding:40px;color:var(--muted);font-size:12px;letter-spacing:0.04em;}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="h-logo">
+    <div class="h-dots">
+      <div class="h-dot" style="background:#1A56E8;"></div>
+      <div class="h-dot" style="background:#E8401A;"></div>
+      <div class="h-dot" style="background:#F0A800;"></div>
+      <div class="h-dot" style="background:#0DAF5E;"></div>
+    </div>
+    <div class="h-sep"></div>
+    <div class="h-name">Ai24</div>
+  </div>
+  <div class="h-right">
+    <div class="h-label">Complete Fix-It Report</div>
+    <div class="h-label">March 2025</div>
+  </div>
+</div>
+
+<!-- Score Header -->
+<div class="score-header">
+  <div class="sh-top">
+    <div>
+      <div class="sh-title">Everything That Needs Fixing</div>
+      <div class="sh-sub">Across website, brand, technical, social & business presence</div>
+      <div class="sh-date">Last scanned: March 2025 · ai24.digital + web-wide audit</div>
+    </div>
+    <div class="sh-totals">
+      <div class="sh-total">
+        <div class="sh-total-num" style="color:var(--red);">12</div>
+        <div class="sh-total-lbl">Critical</div>
+      </div>
+      <div class="sh-total">
+        <div class="sh-total-num" style="color:var(--amber);">9</div>
+        <div class="sh-total-lbl">Warnings</div>
+      </div>
+      <div class="sh-total">
+        <div class="sh-total-num" style="color:var(--blue);">7</div>
+        <div class="sh-total-lbl">Opportunities</div>
+      </div>
+    </div>
+  </div>
+  <div class="cat-nav">
+    <a href="#cat1" class="cat-pill"><div class="cat-pill-dot" style="background:var(--red);"></div><span class="cat-pill-text">Technical</span><span class="cat-pill-count">5 issues</span></a>
+    <a href="#cat2" class="cat-pill"><div class="cat-pill-dot" style="background:var(--red);"></div><span class="cat-pill-text">Brand Cleanup</span><span class="cat-pill-count">4 issues</span></a>
+    <a href="#cat3" class="cat-pill"><div class="cat-pill-dot" style="background:var(--amber);"></div><span class="cat-pill-text">Email & Contact</span><span class="cat-pill-count">3 issues</span></a>
+    <a href="#cat4" class="cat-pill"><div class="cat-pill-dot" style="background:var(--amber);"></div><span class="cat-pill-text">Social Media</span><span class="cat-pill-count">4 issues</span></a>
+    <a href="#cat5" class="cat-pill"><div class="cat-pill-dot" style="background:var(--blue);"></div><span class="cat-pill-text">Analytics & Tracking</span><span class="cat-pill-count">3 issues</span></a>
+    <a href="#cat6" class="cat-pill"><div class="cat-pill-dot" style="background:var(--green);"></div><span class="cat-pill-text">Business Directories</span><span class="cat-pill-count">4 issues</span></a>
+    <a href="#cat7" class="cat-pill"><div class="cat-pill-dot" style="background:var(--green);"></div><span class="cat-pill-text">Content Strategy</span><span class="cat-pill-count">5 issues</span></a>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- ══ CAT 1: TECHNICAL ══ -->
+  <div id="cat1" class="cat-block">
+    <div class="cat-header">
+      <div class="cat-icon">⚙️</div>
+      <div class="cat-title">01 — Technical</div>
+      <div class="cat-score score-red">🔴 Critical</div>
+    </div>
+
+    <div class="highlight hl-red">
+      <div class="hl-icon">🚨</div>
+      <div>
+        <div class="hl-title">The root of every problem: Client-Side Rendering</div>
+        <div class="hl-body">The SEO code kit (meta tags, OG, schema) you already received <strong>will not work properly</strong> until this is fixed. Adding meta tags to a CSR site is like putting a sign on a building that Google can't see. Fix CSR first — everything else compounds from here.</div>
+      </div>
+    </div>
+
+    <div class="finding">
+      <div class="f-stripe critical"></div>
+      <div class="f-body">
+        <div class="f-main">
+          <div class="f-top"><span class="f-icon">🚨</span><div class="f-title">No Server-Side Rendering (SSR / SSG)</div></div>
+          <div class="f-desc">Google only sees the page shell — an almost empty HTML document. Every page on your site, every piece of copy, every service description is completely invisible to search engines. This single issue is the reason you have zero Google indexing.</div>
+          <div class="f-fix">→ Migrate to Next.js with SSG (Static Site Generation). Use next export for a fully static build — fastest fix with biggest impact.</div>
+        </div>
+        <span class="f-tag tag-c">Critical</span>
+      </div>
+    </div>
+
+    <div class="finding">
+      <div class="f-stripe critical"></div>
+      <div class="f-body">
+        <div class="f-main">
+          <div class="f-top"><span class="f-icon">🚨</span><div class="f-title">No robots.txt or sitemap.xml</div></div>
+          <div class="f-desc">Neither file exists on your domain. Both were confirmed missing during the audit. Google has no crawl guidance and no map of your pages. The code for both was provided in the SEO Kit — these need to be deployed immediately.</div>
+          <div class="f-fix">→ Deploy robots.txt + sitemap.xml from the SEO Code Kit, then submit in Google Search Console.</div>
+        </div>
+        <span class="f-tag tag-c">Critical</span>
+      </div>
+    </div>
+
+    <div class="finding">
+      <div class="f-stripe critical"></div>
+      <div class="f-body">
+        <div class="f-main">
+          <div class="f-top"><span class="f-icon">🚨</span><div class="f-title">Google Search Console Not Set Up</div></div>
+          <div class="f-desc">Your domain has never been verified with Google Search Console. This means you have no data on impressions, clicks, crawl errors, or indexing status. It's the most important free tool available — you're flying completely blind without it.</div>
+          <div class="f-fix">→ Go to search.google.com/search-console → Add property → Verify via DNS TXT record (quickest) or HTML file.</div>
+        </div>
+        <span class="f-tag tag-c">Critical</span>
+      </div>
+    </div>
+
+    <div class="finding">
+      <div class="f-stripe warning"></div>
+      <div class="f-body">
+        <div class="f-main">
+          <div class="f-top"><span class="f-icon">⚠️</span><div class="f-title">Core Web Vitals Unknown</div></div>
+          <div class="f-desc">Google's ranking algorithm uses Core Web Vitals (LCP, FID, CLS) as a ranking factor. Because the site is CSR and unindexed, there is no performance data. Once SSR is implemented, a full performance audit is essential.</div>
+          <div class="f-fix">→ After SSR migration, run PageSpeed Insights (pagespeed.web.dev) and target LCP under 2.5s, CLS under 0.1.</div>
+        </div>
+        <span class="f-tag tag-w">Warning</span>
+      </div>
+    </div>
+
+    <div class="finding">
+      <div class="f-stripe warning"></div>
+      <div class="f-body">
+        <div class="f-main">
+          <div class="f-top"><span class="f-icon">⚠️</span><div class="f-title">No Security Headers Confirmed</div></div>
+          <div class="f-desc">Standard security headers (Content-Security-Policy, X-Frame-Options, X-Content-Type-Options) could not be verified. These protect your users and are a trust signal for enterprise clients reviewing your site.</div>
+          <div class="f-fix">→ Add security headers via your hosting provider (Vercel / Netlify have simple config) or via a middleware layer.</div>
+        </div>
+        <span class="f-tag tag-w">Warning</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ CAT 2: BRAND CLEANUP ══ -->
+  <div id="cat2" class="cat-block">
+    <div class="cat-header">
+      <div class="cat-icon">🏷️</div>
+      <div class="cat-title">02 — Brand Cleanup (Urgent)</div>
+      <div class="cat-score score-red">🔴 Critical</div>
+    </div>
+
+    <div class="highlight hl-red">
+      <div class="hl-icon">🔍</div>
+      <div>
+        <div class="hl-title">Right now, Googling your company shows Hysus — not Ai24</div>
+        <div class="hl-body">Searching for "Hysus Digital" returns 8+ active listings across Tracxn, Tofler, IndiaFilings, ZaubaCorp, Zipleaf, and more — all showing the old brand identity as <strong>"a digital marketing agency"</strong>. LinkedIn still shows <strong>"Hysus | Designing | Development | Marketing Agency"</strong> with 1,150 followers. None of this says AI company.</div>
+      </div>
+    </div>
+
+    <div class="finding">
+      <div class="f-stripe critical"></div>
+      <div class="f-body">
+        <div class="f-main">
+          <div class="f-top"><span class="f-icon">🚨</span><div class="f-title">LinkedIn Page: Still Positioned as "Marketing Agency"</div></div>
+          <div class="f-desc">Your LinkedIn page (1,150 followers) currently shows: "Hysus is a cutting-edge IT/Software and Global Digital Marketing Agency." This directly contradicts the Ai24 rebrand. Every potential client, investor, or hire who Googles you will see this first.</div>
+          <div class="f-fix">→ Update: Company name → "Ai24", Tagline → "Enabling Intelligence", Description → AI-first positioning, Banner → new Ai24 brand banner, Logo → Ai24 four-dot icon, URL → linkedin.com/company/ai24digital.</div>
+        </div>
+        <span class="f-tag tag-c">Critical</span>
+      </div>
+    </div>
+
+    <div class="finding">
+      <div class="f-stripe critical"></div>
+      <div class="f-body">
+        <div class="f-main">
+          <div class="f-top"><span class="f-icon">🚨</span><div class="f-title">8+ Business Directories Showing "Hysus Digital"</div></div>
+          <div class="f-desc">Tracxn, Tofler, IndiaFilings, ZaubaCorp, Zipleaf, Falcon Ebiz, Neusource, TheCompanyCheck — all actively displaying the Hysus Digital name, old positioning, and outdated contact info. These rank in Google and are the first thing potential clients, investors, and partners will find.</div>
+          <div class="f-fix">→ Claim and update each listing. Priority order: Tracxn (investor-facing), LinkedIn, IndiaFilings, then others. Update name to Ai24, description to AI company, website to ai24.digital.</div>
+        </div>
+        <span class="f-tag tag-c">Critical</span>
+      </div>
+    </div>
+
+    <div class="finding">
+      <div class="f-stripe warning"></div>
+      <div class="f-body">
+        <div class="f-main">
+          <div class="f-top"><span class="f-icon">⚠️</span><div class="f-title">Old Positioning: "Digital Marketing Agency" Must Die</div></div>
+          <div class="f-desc">Every directory, LinkedIn post, and archived page describes Hysus/Ai24 as a "digital marketing agency." This is completely misaligned with an AI company positioning. Every piece of old content reinforces the wrong identity.</div>
+          <div class="f-fix">→ New positioning line to use everywhere: "Ai24 is an AI intelligence company enabling businesses with intelligence, speed, innovation and growth — 24/7."</div>
+        </div>
+        <span class="f-tag tag-w">Warning</span>
+      </div>
+    </div>
+
+    <div class="finding">
+      <div class="f-stripe warning"></div>
+      <div class="f-body">
+        <div class="f-main">
+          <div class="f-top"><span class="f-icon">⚠️</span><div class="f-title">No 301 Redirect from Old Domain to ai24.digital</div></div>
+          <div class="f-desc">If hysus.com or hysusdigital.com exist and are active, they must 301-redirect to ai24.digital. Without this, any link equity, traffic, or bookmarks from the old brand are lost — and the two brands appear as separate entities to Google.</div>
+          <div class="f-fix">→ Set up a permanent 301 redirect from all old domains to https://www.ai24.digital/ via your hosting dashboard or DNS settings.</div>
+        </div>
+        <span class="f-tag tag-w">Warning</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ CAT 3: EMAIL & CONTACT ══ -->
+  <div id="cat3" class="cat-block">
+    <div class="cat-header">
+      <div class="cat-icon">📧</div>
+      <div class="cat-title">03 — Email & Contact</div>
+      <div class="cat-score score-amber">🟡 Important</div>
+    </div>
+
+    <div class="highlight hl-amber">
+      <div class="hl-icon">⚠️</div>
+      <div>
+        <div class="hl-title">Your official company email is hysustechnology@gmail.com</div>
+        <div class="hl-body">Multiple business databases (IndiaFilings, ZaubaCorp, FalconEbiz) publicly list <strong>hysustechnology@gmail.com</strong> as the contact email for Hysus Digital. For an AI company pitching to enterprise clients, a Gmail address is a trust killer. Any email from this address looks unprofessional against the Ai24 premium positioning.</div>
+      </div>
+    </div>
+
+    <div class="finding">
+      <div class="f-stripe critical"></div>
+      <div class="f-body">
+        <div class="f-main">
+          <div class="f-top"><span class="f-icon">🚨</span><div class="f-title">No Professional Email Domain (@ai24.digital)</div></div>
+          <div class="f-desc">All business communication should go through @ai24.digital email addresses. Using Gmail publicly as a company's official contact email signals that the business isn't serious — especially damaging for an AI company trying to win enterprise clients.</div>
+          <div class="f-fix">→ Set up Google Workspace or Zoho Mail with your ai24.digital domain. Create: hello@ai24.digital, info@ai24.digital, careers@ai24.digital, and personal addresses like [name]@ai24.digital.</div>
+        </div>
+        <span class="f-tag tag-c">Critical</span>
+      </div>
+    </div>
+
+    <div class="finding">
+      <div class="f-stripe warning"></div>
+      <div class="f-body">
+        <div class="f-main">
+          <div class="f-top"><span class="f-icon">⚠️</span><div class="f-title">No Contact Page / Form Confirmed</div></div>
+          <div class="f-desc">No contact page could be verified on ai24.digital from the outside. Every B2B website must have a clear, working contact form. Without it, interested prospects have no way to reach you — potential revenue walks away.</div>
+          <div class="f-fix">→ Add a /contact page with a form (name, company, email, message), your professional email, and ideally a Calendly/Cal.com link for booking calls directly.</div>
+        </div>
+        <span class="f-tag tag-w">Warning</span>
+      </div>
+    </div>
+
+    <div class="finding">
+      <div class="f-stripe warning"></div>
+      <div class="f-body">
+        <div class="f-main">
+          <div class="f-top"><span class="f-icon">⚠️</span><div class="f-title">No WhatsApp Business Account Linked</div></div>
+          <div class="f-desc">For the Indian B2B market, WhatsApp is a primary business communication channel. An Ai24 WhatsApp Business profile with a branded display name and auto-responses dramatically increases inbound conversion.</div>
+          <div class="f-fix">→ Create a WhatsApp Business account under the Ai24 brand. Add a WhatsApp click-to-chat link on your website. Consider a WhatsApp API integration for lead capture.</div>
+        </div>
+        <span class="f-tag tag-w">Warning</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ CAT 4: SOCIAL MEDIA ══ -->
+  <div id="cat4" class="cat-block">
+    <div class="cat-header">
+      <div class="cat-icon">📱</div>
+      <div class="cat-title">04 — Social Media</div>
+      <div class="cat-score score-amber">🟡 Important</div>
+    </div>
+
+    <div class="finding">
+      <div class="f-stripe critical"></div>
+      <div class="f-body">
+        <div class="f-main">
+          <div class="f-top"><span class="f-icon">🚨</span><div class="f-title">Instagram: Still Operating as Hysus Digital</div></div>
+          <div class="f-desc">Instagram profile appears to still be under the Hysus Digital branding. The rebrand announcement post we created is ready — but posting it from an unbranded account undermines the entire message. Handle, bio, profile picture and highlights must all be Ai24 before posting.</div>
+          <div class="f-fix">→ Change handle to @ai24.digital or @ai24_official · Update profile picture to Ai24 four-dot icon · Update bio to "Enabling Intelligence | AI solutions for business | ai24.digital".</div>
+        </div>
+        <span class="f-tag tag-c">Critical</span>
+      </div>
+    </div>
+
+    <div class="finding">
+      <div class="f-stripe warning"></div>
+      <div class="f-body">
+        <div class="f-main">
+          <div class="f-top"><span class="f-icon">⚠️</span><div class="f-title">Twitter/X: Ai24 Handle Not Claimed</div></div>
+          <div class="f-desc">@ai24digital or @ai24 on Twitter/X does not appear to be claimed. In the AI industry, Twitter/X is where thought leaders, investors, and tech professionals congregate. Not having a presence here means missing a key audience entirely.</div>
+          <div class="f-fix">→ Claim @ai24digital on Twitter/X immediately before someone else does. Set up a complete profile with the brand identity.</div>
+        </div>
+        <span class="f-tag tag-w">Warning</span>
+      </div>
+    </div>
+
+    <div class="finding">
+      <div class="f-stripe warning"></div>
+      <div class="f-body">
+        <div class="f-main">
+          <div class="f-top"><span class="f-icon">⚠️</span><div class="f-title">No YouTube Channel</div></div>
+          <div class="f-desc">AI is a highly visual, education-driven industry. YouTube is the second-largest search engine. Explainer videos, product demos, and "AI for business" content on YouTube can drive significant qualified traffic — competitors are already building here.</div>
+          <div class="f-fix">→ Create and brand a YouTube channel as Ai24. Start with 2–3 short explainer videos: "What is Ai24?", "The Four Layers explained", "How AI transforms [industry]".</div>
+        </div>
+        <span class="f-tag tag-w">Warning</span>
+      </div>
+    </div>
+
+    <div class="finding">
+      <div class="f-stripe info"></div>
+      <div class="f-body">
+        <div class="f-main">
+          <div class="f-top"><span class="f-icon">💡</span><div class="f-title">Opportunity: LinkedIn Content Strategy</div></div>
+          <div class="f-desc">LinkedIn is the primary B2B channel in India. With 1,150 existing followers (from Hysus), there's an audience ready to convert. But the page needs consistent, high-quality AI content — not marketing agency posts.</div>
+          <div class="f-fix">→ Post 3x/week: mix of AI industry insights, Ai24 product updates, "Four Layers" educational series, and founder thought leadership. Track follower growth monthly.</div>
+        </div>
+        <span class="f-tag tag-i">Opportunity</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ CAT 5: ANALYTICS ══ -->
+  <div id="cat5" class="cat-block">
+    <div class="cat-header">
+      <div class="cat-icon">📊</div>
+      <div class="cat-title">05 — Analytics & Tracking</div>
+      <div class="cat-score score-blue">🔵 Setup Required</div>
+    </div>
+
+    <div class="finding">
+      <div class="f-stripe critical"></div>
+      <div class="f-body">
+        <div class="f-main">
+          <div class="f-top"><span class="f-icon">🚨</span><div class="f-title">No Google Analytics (GA4) Installed</div></div>
+          <div class="f-desc">There is no Google Analytics tracking on ai24.digital. You have zero data on who visits your site, where they come from, what they look at, or where they drop off. Every day without analytics is data permanently lost — you can never recover historical data.</div>
+          <div class="f-fix">→ Create a GA4 property at analytics.google.com. Add the gtag.js snippet to your site's &lt;head&gt;. Set up conversion events (contact form submit, CTA click, etc.).</div>
+        </div>
+        <span class="f-tag tag-c">Critical</span>
+      </div>
+    </div>
+
+    <div class="finding">
+      <div class="f-stripe critical"></div>
+      <div class="f-body">
+        <div class="f-main">
+          <div class="f-top"><span class="f-icon">🚨</span><div class="f-title">Google Search Console Not Verified</div></div>
+          <div class="f-desc">Search Console is the direct line of communication between Google and your website. Without it, you won't know when Google finds errors, what search queries bring people to your site, or when your pages get indexed. It's free and essential.</div>
+          <div class="f-fix">→ Verify at search.google.com/search-console using the DNS method. Takes 5 minutes. Submit sitemap after verifying.</div>
+        </div>
+        <span class="f-tag tag-c">Critical</span>
+      </div>
+    </div>
+
+    <div class="finding">
+      <div class="f-stripe info"></div>
+      <div class="f-body">
+        <div class="f-main">
+          <div class="f-top"><span class="f-icon">💡</span><div class="f-title">Opportunity: LinkedIn Pixel + Meta Pixel</div></div>
+          <div class="f-desc">For B2B retargeting, LinkedIn Insight Tag is invaluable — it lets you retarget website visitors on LinkedIn with ads, and track which LinkedIn campaigns drive site traffic. Meta Pixel does the same for Instagram and Facebook.</div>
+          <div class="f-fix">→ Install LinkedIn Insight Tag and Meta Pixel on all pages. Build retargeting audiences from day one — even if you're not running ads yet, the data will be there when you need it.</div>
+        </div>
+        <span class="f-tag tag-i">Opportunity</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ CAT 6: BUSINESS DIRECTORIES ══ -->
+  <div id="cat6" class="cat-block">
+    <div class="cat-header">
+      <div class="cat-icon">📋</div>
+      <div class="cat-title">06 — Business Directories & Online Listings</div>
+      <div class="cat-score score-amber">🟡 Important</div>
+    </div>
+
+    <div class="highlight hl-amber">
+      <div class="hl-icon">🔎</div>
+      <div>
+        <div class="hl-title">8 public directories actively showing wrong information</div>
+        <div class="hl-body">These sites are indexed by Google and rank when people search for your company. Every one of them shows <strong>Hysus Digital</strong>, <strong>hysustechnology@gmail.com</strong>, and <strong>"digital marketing agency"</strong>. This is the first thing investors, clients, and partners will find.</div>
+      </div>
+    </div>
+
+    <div class="finding">
+      <div class="f-stripe critical"></div>
+      <div class="f-body">
+        <div class="f-main">
+          <div class="f-top"><span class="f-icon">🚨</span><div class="f-title">Tracxn — Update Company Profile</div></div>
+          <div class="f-desc">Tracxn is heavily used by investors and VCs. Your profile shows "Hysus Digital Private Limited" with no Ai24 mention. This is critical for fundraising credibility.</div>
+          <div class="f-fix">→ Claim profile at tracxn.com · Update: brand name to Ai24, website to ai24.digital, description, logo, and sector to "Artificial Intelligence".</div>
+        </div>
+        <span class="f-tag tag-c">Critical</span>
+      </div>
+    </div>
+
+    <div class="finding">
+      <div class="f-stripe warning"></div>
+      <div class="f-body">
+        <div class="f-main">
+          <div class="f-top"><span class="f-icon">⚠️</span><div class="f-title">Register on Clutch.co & G2 as an AI Company</div></div>
+          <div class="f-desc">Clutch.co and G2 are the primary review platforms for B2B tech companies. Ai24 has no presence on either. Prospects actively search these platforms to vet vendors before making purchase decisions. Competitors are listed here.</div>
+          <div class="f-fix">→ Create verified profiles on Clutch.co (clutch.co/get-listed) and G2 (g2.com/sell). Add 3–5 client reviews to start building credibility immediately.</div>
+        </div>
+        <span class="f-tag tag-w">Warning</span>
+      </div>
+    </div>
+
+    <div class="finding">
+      <div class="f-stripe info"></div>
+      <div class="f-body">
+        <div class="f-main">
+          <div class="f-top"><span class="f-icon">💡</span><div class="f-title">Opportunity: Google Business Profile</div></div>
+          <div class="f-desc">A verified Google Business Profile means Ai24 appears in the right-side Knowledge Panel on Google searches. It also enables reviews, adds your phone number and location, and dramatically increases trust for local and national prospects.</div>
+          <div class="f-fix">→ Create a profile at business.google.com. Category: "Software Company" or "Artificial Intelligence Company". Add logo, cover photo, and description using brand guidelines.</div>
+        </div>
+        <span class="f-tag tag-i">Opportunity</span>
+      </div>
+    </div>
+
+    <div class="finding">
+      <div class="f-stripe info"></div>
+      <div class="f-body">
+        <div class="f-main">
+          <div class="f-top"><span class="f-icon">💡</span><div class="f-title">Opportunity: Product Hunt & AngelList</div></div>
+          <div class="f-desc">For AI companies in India targeting global clients or investors, Product Hunt and AngelList/Wellfound are powerful credibility platforms. A well-crafted Product Hunt listing can drive thousands of signups in a single day.</div>
+          <div class="f-fix">→ Create Ai24 profiles on Product Hunt and AngelList. Plan a Product Hunt launch around a new product or feature release for maximum visibility.</div>
+        </div>
+        <span class="f-tag tag-i">Opportunity</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ CAT 7: CONTENT ══ -->
+  <div id="cat7" class="cat-block">
+    <div class="cat-header">
+      <div class="cat-icon">✍️</div>
+      <div class="cat-title">07 — Content Strategy</div>
+      <div class="cat-score score-green">🟢 Build Now</div>
+    </div>
+
+    <div class="finding">
+      <div class="f-stripe info"></div>
+      <div class="f-body">
+        <div class="f-main">
+          <div class="f-top"><span class="f-icon">💡</span><div class="f-title">No Blog / Insights Section</div></div>
+          <div class="f-desc">AI is one of the top search categories globally and in India. Publishing 2–3 high-quality articles per month on AI for business can compound into thousands of organic visits. This is the single highest-ROI content investment available to Ai24 right now.</div>
+          <div class="f-fix">→ Start with: "What is an AI-first company?", "How AI reduces ops costs for Indian SMBs", "The 4 layers of business intelligence", "AI vs Automation — what's the difference?"</div>
+        </div>
+        <span class="f-tag tag-i">Opportunity</span>
+      </div>
+    </div>
+
+    <div class="finding">
+      <div class="f-stripe info"></div>
+      <div class="f-body">
+        <div class="f-main">
+          <div class="f-top"><span class="f-icon">💡</span><div class="f-title">No Case Studies or Social Proof</div></div>
+          <div class="f-desc">Enterprise and mid-market buyers in India need evidence before they commit. No testimonials, client logos, or case studies are visible. This is likely the biggest conversion bottleneck — trust must be established before a prospect will ever contact you.</div>
+          <div class="f-fix">→ Write 2–3 brief case studies (problem → solution → result format). Add client logos to homepage. Even one strong testimonial from a credible client changes conversion rates significantly.</div>
+        </div>
+        <span class="f-tag tag-i">Opportunity</span>
+      </div>
+    </div>
+
+    <div class="finding">
+      <div class="f-stripe warning"></div>
+      <div class="f-body">
+        <div class="f-main">
+          <div class="f-top"><span class="f-icon">⚠️</span><div class="f-title">No Clear CTA Above the Fold</div></div>
+          <div class="f-desc">Without seeing the live site, the absence of a contact page in the navigation and no confirmed lead capture mechanism suggests visitors have no obvious next step. In B2B, if the action isn't obvious within 5 seconds, most visitors leave.</div>
+          <div class="f-fix">→ Every page needs one primary CTA above the fold: "Book a Demo", "Talk to Us", or "Get Started". Make it blue (#1A56E8) and impossible to miss.</div>
+        </div>
+        <span class="f-tag tag-w">Warning</span>
+      </div>
+    </div>
+
+    <div class="finding">
+      <div class="f-stripe info"></div>
+      <div class="f-body">
+        <div class="f-main">
+          <div class="f-top"><span class="f-icon">💡</span><div class="f-title">Opportunity: "The Four Layers" as a Content Pillar</div></div>
+          <div class="f-desc">Your brand framework — Intelligence, Speed, Innovation, Growth — is a genuinely differentiated story in a sea of generic AI companies. This is content gold. Each layer can be a blog series, a social campaign, a case study theme, and a sales asset.</div>
+          <div class="f-fix">→ Build a dedicated "The Ai24 Framework" page explaining the four layers with business examples. Use it in every pitch, every post, every proposal.</div>
+        </div>
+        <span class="f-tag tag-i">Opportunity</span>
+      </div>
+    </div>
+
+    <div class="finding">
+      <div class="f-stripe info"></div>
+      <div class="f-body">
+        <div class="f-main">
+          <div class="f-top"><span class="f-icon">💡</span><div class="f-title">Opportunity: Email Newsletter</div></div>
+          <div class="f-desc">A weekly or fortnightly AI newsletter for Indian business owners and decision-makers positions Ai24 as a thought leader and builds a direct audience independent of algorithms. Even 500 engaged subscribers represents a powerful sales pipeline.</div>
+          <div class="f-fix">→ Set up a simple newsletter via Mailchimp or Beehiiv. Add a subscribe field to the website. Start with a "State of AI in India" monthly digest.</div>
+        </div>
+        <span class="f-tag tag-i">Opportunity</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ ROADMAP ══ -->
+  <div class="roadmap">
+    <div class="rm-title">📍 The Complete Fix Roadmap</div>
+    <div class="rm-grid">
+      <div class="rm-col rm-col-1">
+        <div class="rm-week">This Week — Stop the Bleeding</div>
+        <div class="rm-item">Add SSR/SSG to website (Next.js)</div>
+        <div class="rm-item">Deploy robots.txt + sitemap.xml</div>
+        <div class="rm-item">Set up Google Search Console</div>
+        <div class="rm-item">Install Google Analytics GA4</div>
+        <div class="rm-item">Update LinkedIn to Ai24 brand</div>
+        <div class="rm-item">Update Instagram handle + profile</div>
+        <div class="rm-item">Claim @ai24digital on Twitter/X</div>
+        <div class="rm-item">Set up @ai24.digital email domain</div>
+      </div>
+      <div class="rm-col rm-col-2">
+        <div class="rm-week">Weeks 2–3 — Build the Foundation</div>
+        <div class="rm-item">Update all 8 business directories</div>
+        <div class="rm-item">Create Google Business Profile</div>
+        <div class="rm-item">Add OG image (1200×630px) to site</div>
+        <div class="rm-item">Deploy all SEO code kit tags</div>
+        <div class="rm-item">Set up LinkedIn Pixel + Meta Pixel</div>
+        <div class="rm-item">Add contact page + booking link</div>
+        <div class="rm-item">Set up WhatsApp Business profile</div>
+        <div class="rm-item">Post rebrand announcement on Instagram</div>
+      </div>
+      <div class="rm-col rm-col-3">
+        <div class="rm-week">Month 2 — Compound the Growth</div>
+        <div class="rm-item">Launch blog — 4 SEO articles</div>
+        <div class="rm-item">Add case studies + testimonials</div>
+        <div class="rm-item">Register on Clutch.co + G2</div>
+        <div class="rm-item">Create YouTube channel</div>
+        <div class="rm-item">Launch LinkedIn content series</div>
+        <div class="rm-item">Set up email newsletter</div>
+        <div class="rm-item">List on Product Hunt + AngelList</div>
+        <div class="rm-item">Run first PageSpeed audit + fix</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer">
+  Ai24 Complete Fix-It Report · ai24.digital · March 2025 · Prepared for Hysus Digital Private Limited · Confidential
+</div>
+
+</body>
+</html>
